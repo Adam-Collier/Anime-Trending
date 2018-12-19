@@ -37,16 +37,19 @@ const AnimeList = ({ show }) => (
 
 const AnimeContainer = ({ data }) => (
   <div className="root">
-    {Object.entries(data).map((animeGenre, index) => (
-      <section key={index}>
-        <h1>Trending in {animeGenre[0]}</h1>
-        <div key={animeGenre[0]}>
-          {animeGenre[1].media.map(anime => (
-            <AnimeList key={anime.id} show={anime} />
-          ))}
-        </div>
-      </section>
-    ))}
+    {Object.entries(data).map((animeGenre, index) => {
+      // console.log(animeGenre);
+      return (
+        <section key={index}>
+          <h1>Trending in {animeGenre[0]}</h1>
+          <div key={animeGenre[0]}>
+            {animeGenre[1].map(anime => (
+              <AnimeList key={anime.id} show={anime} />
+            ))}
+          </div>
+        </section>
+      );
+    })}
     <style jsx>{`
       .root {
         width: 80%;

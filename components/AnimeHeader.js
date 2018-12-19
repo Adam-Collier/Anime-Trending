@@ -49,6 +49,7 @@ const animeHeader = props => {
           .cover {
             width: 25%;
             min-width: 170px;
+            max-width: 240px;
             margin-right: 30px;
           }
           .cover img {

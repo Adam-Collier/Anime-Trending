@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next",
     "build": "next build",
     "start": "next start",
     "serve": "NODE_ENV=production node server.js"
@@ -14,9 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "apollo-boost": "^0.1.22",
+    "axios": "^0.18.0",
     "express": "^4.16.4",
     "graphql": "^14.0.2",
     "isomorphic-unfetch": "^3.0.0",
+    "lru-cache": "^5.1.1",
     "next": "^7.0.2",
     "react": "^16.6.3",
     "react-apollo": "^2.3.2",
