@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "serve": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
