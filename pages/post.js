@@ -8,7 +8,7 @@ const Post = ({ show }) => (
   </Layout>
 );
 
-Post.getInitialProps = async function(context) {
+Post.getInitialProps = async function (context) {
   const { id } = context.query;
 
   var query = `
@@ -60,6 +60,10 @@ query ($id: Int){
       })
     };
 
+  fetch(`https://kitsu.io/api/edge/episodes?filter%5BmediaType%5D=Anime&filter%5Bmedia_id%5D=13209&sort=number`)
+    .then((response) => response.json())
+    .then(data => console.log(data));
+
   // Make the HTTP Api request
   return fetch(url, options)
     .then(handleResponse)
@@ -67,7 +71,7 @@ query ($id: Int){
     .catch(handleError);
 
   function handleResponse(response) {
-    return response.json().then(function(json) {
+    return response.json().then(function (json) {
       return response.ok ? json : Promise.reject(json);
     });
   }
