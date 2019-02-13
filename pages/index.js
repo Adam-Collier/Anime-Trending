@@ -4,35 +4,28 @@ import axios from "axios";
 import AnimeHeader from "../components/AnimeHeader";
 import AnimeContainer from "../components/AnimeContainer";
 
-export default function Index({ data }) {
+export default function Index({ trending, data }) {
   return (
     <Layout>
-      <AnimeHeader data={data.Action[0]} />
+      <AnimeHeader data={trending} />
       <AnimeContainer data={data} />
     </Layout>
   );
 }
 
-Index.getInitialProps = async function() {
+Index.getInitialProps = async function () {
   var query = `
-query ($genre: String){
-  Page(perPage: 10) {
-    media (sort: TRENDING_DESC, genre: $genre, type: ANIME){
-      id
-      title {
-        romaji
-        native
+  query ($genre: String){
+    Page(perPage: 10) {
+      media (sort: TRENDING_DESC, genre: $genre, type: ANIME){
+        id
+        coverImage {
+          large
+        }
       }
-      description
-      coverImage {
-        medium
-        large
-      }
-      bannerImage
     }
   }
-}
-`;
+  `;
 
   // Define the config we'll need for our Api request
   let url = "https://graphql.anilist.co";
@@ -53,7 +46,7 @@ query ($genre: String){
     });
   };
 
-  async function getData() {
+  async function getListData() {
     try {
       let getAction = axios.post(url, addGenre("action"), headers);
       let getAdventure = axios.post(url, addGenre("adventure"), headers);
@@ -62,6 +55,7 @@ query ($genre: String){
       let getThriller = axios.post(url, addGenre("thriller"), headers);
       let getScifi = axios.post(url, addGenre("sci-fi"), headers);
 
+      console.log("starting to get the data");
       const [
         action,
         adventure,
@@ -87,7 +81,6 @@ query ($genre: String){
         Scifi: scifi.data.data.Page.media
       };
 
-      // console.log(data);
       let dataCollection = await data;
       return dataCollection;
     } catch (error) {
@@ -95,5 +88,32 @@ query ($genre: String){
     }
   }
 
-  return { data: await getData() };
+  var trendingQuery = `
+query {
+  Media (sort: TRENDING_DESC, type: ANIME){
+    id
+    title {
+      romaji
+      native
+    }
+    bannerImage
+    coverImage {
+      large
+    }
+    description
+  }
+}
+`;
+
+  async function getTrendingHeader() {
+    try {
+      let trendingData = axios.post(url, { query: trendingQuery }, headers)
+      let trendingHeader = await trendingData;
+      return trendingHeader.data.data.Media;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return { trending: await getTrendingHeader(), data: await getListData() };
 };
