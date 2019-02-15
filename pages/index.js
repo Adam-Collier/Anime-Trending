@@ -24,7 +24,7 @@ Index.getInitialProps = async function () {
 
   let categories = Object.keys(obj)
 
-  let promiseArray = Object.keys(obj).map((x) => axios.get(`https://kitsu.io/api/edge/trending/anime?limit=15&in_category=true&category=${arr[x]}`))
+  let promiseArray = Object.keys(obj).map((x) => axios.get(`https://kitsu.io/api/edge/trending/anime?limit=15&in_category=true&category=${obj[x]}`))
 
   let data = await Promise.all(promiseArray)
 
