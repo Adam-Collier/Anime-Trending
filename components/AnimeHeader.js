@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "next/router";
+import Readmore from "./ReadMore";
 
 const animeHeader = props => {
   let data = props.data;
@@ -17,7 +18,7 @@ const animeHeader = props => {
           {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
           <h1>{data.attributes.titles.en}</h1>
           <h2>{data.attributes.titles.ja_jp}</h2>
-          <p dangerouslySetInnerHTML={{ __html: data.attributes.synopsis }} />
+          <Readmore synopsis={data.attributes.synopsis} />
         </div>
       </div>
       <style jsx>
