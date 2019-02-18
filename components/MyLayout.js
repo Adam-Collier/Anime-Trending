@@ -38,6 +38,10 @@ const Layout = props => (
       button:focus {
         outline: none;
       }
+      a {
+        text-decoration: none;
+        color: #ffffff;
+      }
     `}</style>
   </div>
 );
