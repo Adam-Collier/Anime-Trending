@@ -1,9 +1,21 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { withRouter } from "next/router";
 import ReadMore from "./ReadMore";
+import Link from "next/link";
 
 const animeHeader = props => {
   let data = props.data;
+
+  let ConditionalLink = ({ children }) => {
+    return props.router.pathname === "/" ? (
+      <Link as={`/anime/${data.id}`} href={`/post?id=${data.id}`}>
+        <a>{children}</a>
+      </Link>
+    ) : (
+      children
+    );
+  };
+
   return (
     <div>
       <div className="banner">
@@ -11,12 +23,18 @@ const animeHeader = props => {
       </div>
       <div className="content">
         <div className="cover">
-          <img src={data.attributes.posterImage.medium} alt="" />
+          <ConditionalLink>
+            <img src={data.attributes.posterImage.medium} alt="" />
+          </ConditionalLink>
         </div>
         <div className="description">
           {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
-          <h1>{data.attributes.titles.en}</h1>
-          <h2>{data.attributes.titles.ja_jp}</h2>
+          <ConditionalLink>
+            <Fragment>
+              <h1>{data.attributes.titles.en}</h1>
+              <h2>{data.attributes.titles.ja_jp}</h2>
+            </Fragment>
+          </ConditionalLink>
           <ReadMore synopsis={data.attributes.synopsis} />
         </div>
       </div>
