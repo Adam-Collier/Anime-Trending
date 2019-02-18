@@ -3,20 +3,21 @@ import { withRouter } from "next/router";
 
 const animeHeader = props => {
   let data = props.data;
+  console.log("this is the data", data);
   return (
     <div>
       <div className="banner">
-        <img src={data.bannerImage} alt="" />
+        <img src={data.attributes.coverImage.large} alt="" />
       </div>
       <div className="content">
         <div className="cover">
-          <img src={data.coverImage.large} alt="" />
+          <img src={data.attributes.posterImage.medium} alt="" />
         </div>
         <div className="description">
           {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
-          <h1>{data.title.romaji}</h1>
-          <h2>{data.title.native}</h2>
-          <p dangerouslySetInnerHTML={{ __html: data.description }} />
+          <h1>{data.attributes.titles.en}</h1>
+          <h2>{data.attributes.titles.ja_jp}</h2>
+          <p dangerouslySetInnerHTML={{ __html: data.attributes.synopsis }} />
         </div>
       </div>
       <style jsx>

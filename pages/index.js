@@ -4,116 +4,46 @@ import axios from "axios";
 import AnimeHeader from "../components/AnimeHeader";
 import AnimeContainer from "../components/AnimeContainer";
 
-export default function Index({ trending, data }) {
+export default function Index({ header, data }) {
   return (
     <Layout>
-      <AnimeHeader data={trending} />
+      <AnimeHeader data={header} />
       <AnimeContainer data={data} />
     </Layout>
   );
 }
 
 Index.getInitialProps = async function () {
-  var query = `
-  query ($genre: String){
-    Page(perPage: 10) {
-      media (sort: TRENDING_DESC, genre: $genre, type: ANIME){
-        id
-        coverImage {
-          large
-        }
-      }
-    }
-  }
-  `;
-
-  // Define the config we'll need for our Api request
-  let url = "https://graphql.anilist.co";
-
-  let headers = {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    }
-  };
-
-  let addGenre = genre => {
-    return JSON.stringify({
-      query: query,
-      variables: {
-        genre: genre
-      }
-    });
-  };
-
-  async function getListData() {
-    try {
-      let getAction = axios.post(url, addGenre("action"), headers);
-      let getAdventure = axios.post(url, addGenre("adventure"), headers);
-      let getComedy = axios.post(url, addGenre("comedy"), headers);
-      let getFantasy = axios.post(url, addGenre("fantasy"), headers);
-      let getThriller = axios.post(url, addGenre("thriller"), headers);
-      let getScifi = axios.post(url, addGenre("sci-fi"), headers);
-
-      console.log("starting to get the data");
-      const [
-        action,
-        adventure,
-        comedy,
-        fantasy,
-        thriller,
-        scifi
-      ] = await Promise.all([
-        getAction,
-        getAdventure,
-        getComedy,
-        getFantasy,
-        getThriller,
-        getScifi
-      ]);
-
-      let data = {
-        Action: action.data.data.Page.media,
-        Adventure: adventure.data.data.Page.media,
-        Comedy: comedy.data.data.Page.media,
-        Fantasy: fantasy.data.data.Page.media,
-        Thriller: thriller.data.data.Page.media,
-        Scifi: scifi.data.data.Page.media
-      };
-
-      let dataCollection = await data;
-      return dataCollection;
-    } catch (error) {
-      console.log(error);
-    }
+  let obj = {
+    comedy: 160,
+    action: 150,
+    fantasy: 156,
+    thriller: 159,
+    adventure: 157,
   }
 
-  var trendingQuery = `
-query {
-  Media (sort: TRENDING_DESC, type: ANIME){
-    id
-    title {
-      romaji
-      native
-    }
-    bannerImage
-    coverImage {
-      large
-    }
-    description
-  }
-}
-`;
+  let categories = Object.keys(obj)
+
+  let promiseArray = Object.keys(obj).map((x) => axios.get(`https://kitsu.io/api/edge/trending/anime?limit=15&in_category=true&category=${obj[x]}`))
+
+  let data = await Promise.all(promiseArray)
+
+  let categoryLists = categories.map((x, i) => {
+    return { [categories[i]]: data[i].data.data };
+  })
 
   async function getTrendingHeader() {
     try {
-      let trendingData = axios.post(url, { query: trendingQuery }, headers)
+      let trendingData = axios.get(`https://kitsu.io/api/edge/trending/anime?limit=1`)
       let trendingHeader = await trendingData;
-      return trendingHeader.data.data.Media;
+      return trendingHeader.data.data[0];
     } catch (error) {
       console.log(error);
     }
   }
 
-  return { trending: await getTrendingHeader(), data: await getListData() };
+  return {
+    data: await categoryLists,
+    header: await getTrendingHeader()
+  }
 };

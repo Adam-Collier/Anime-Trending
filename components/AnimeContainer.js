@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-const AnimeList = ({ show }) => (
+const AnimeList = ({ anime }) => (
   <div className="anime">
-    <Link as={`/anime/${show.id}`} href={`/post?id=${show.id}`}>
+    <Link as={`/anime/${anime.id}`} href={`/post?id=${anime.id}`}>
       <div>
         <a>
-          <img src={show.coverImage.large} alt="" />
+          <img src={anime.attributes.posterImage.medium} alt="" />
         </a>
       </div>
     </Link>
@@ -37,14 +37,14 @@ const AnimeList = ({ show }) => (
 
 const AnimeContainer = ({ data }) => (
   <div className="root">
-    {Object.entries(data).map((animeGenre, index) => {
-      // console.log(animeGenre);
+    {data.map((category, index) => {
+      let categoryName = Object.keys(category)[0]
       return (
         <section key={index}>
-          <h1>Trending in {animeGenre[0]}</h1>
-          <div key={animeGenre[0]}>
-            {animeGenre[1].map(anime => (
-              <AnimeList key={anime.id} show={anime} />
+          <h1>Trending in {categoryName}</h1>
+          <div key={categoryName}>
+            {category[categoryName].map(anime => (
+              <AnimeList key={anime.id} anime={anime} />
             ))}
           </div>
         </section>
