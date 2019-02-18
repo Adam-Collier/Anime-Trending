@@ -1,142 +1,119 @@
 import Layout from "../components/MyLayout.js";
-import Link from "next/link";
-let fetch = require("isomorphic-unfetch");
+import axios from "axios";
 
-const AnimeList = ({ show }) => (
-  <div className="anime">
-    <Link as={`/anime/${show.id}`} href={`/post?id=${show.id}`}>
-      <div>
-        <a>
-          <img src={show.coverImage.large} alt="" />
-          <p>{show.title.romaji}</p>
-        </a>
-      </div>
-    </Link>
-    <style jsx>{`
-      .anime {
-        display: inline-block;
-        vertical-align: top;
-        margin-right: 50px;
-        border-radius: 5px;
-        width: 20%;
-      }
-      a {
-        cursor: pointer;
-      }
-      img {
-        display: block;
-        width: 100%;
-        border-radius: 5px;
-      }
-      p {
-        white-space: normal;
-      }
-    `}</style>
-  </div>
-);
+import AnimeHeader from "../components/AnimeHeader";
+import AnimeContainer from "../components/AnimeContainer";
 
-function Index({ animeGenres }) {
-  console.log(animeGenres);
-  // Object.entries(animeGenres).map(x => console.log(x));
-  // Object.entries(props.animeGenres).map(x => console.log(x));
-  // console.log(props.animeGenres);
-
+export default function Index({ trending, data }) {
   return (
     <Layout>
-      <h1>My Blog</h1>
-      <div>
-        {Object.entries(animeGenres).map(animeGenre => (
-          <div key={animeGenre[0]}>
-            {console.log(animeGenre)}
-            <h1>{animeGenre[0]}</h1>
-            {animeGenre[1].media.map(anime => (
-              <AnimeList key={anime.id} show={anime} />
-            ))}
-          </div>
-        ))}
-
-        {/* {props.shows.map(show => (
-        <AnimeList key={show.id} show={show} />
-      ))} */}
-      </div>
-      <style jsx>{`
-        h1,
-        a {
-          font-family: "Arial";
-        }
-        div {
-          width: 100%;
-          overflow-x: auto;
-          overflow-y: visible;
-          -webkit-overflow-scrolling: touch;
-          white-space: nowrap;
-        }
-      `}</style>
+      <AnimeHeader data={trending} />
+      <AnimeContainer data={data} />
     </Layout>
   );
 }
 
-Index.getInitialProps = async function(context) {
+Index.getInitialProps = async function () {
   var query = `
-query getAnimeGenres{  
-  action: Page (perPage: 10){ 
-    media (sort: TRENDING_DESC, genre: "Action" ) {
-      ...animeFields
+  query ($genre: String){
+    Page(perPage: 10) {
+      media (sort: TRENDING_DESC, genre: $genre, type: ANIME){
+        id
+        coverImage {
+          large
+        }
+      }
     }
   }
-  adventure: Page (perPage: 10){ 
-    media (sort: TRENDING_DESC, genre: "Adventure" ) {
-      ...animeFields
-    }
-  }
-}
+  `;
 
-fragment animeFields on Media{
-  id
-  title {
-    romaji
+  // Define the config we'll need for our Api request
+  let url = "https://graphql.anilist.co";
+
+  let headers = {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    }
+  };
+
+  let addGenre = genre => {
+    return JSON.stringify({
+      query: query,
+      variables: {
+        genre: genre
+      }
+    });
+  };
+
+  async function getListData() {
+    try {
+      let getAction = axios.post(url, addGenre("action"), headers);
+      let getAdventure = axios.post(url, addGenre("adventure"), headers);
+      let getComedy = axios.post(url, addGenre("comedy"), headers);
+      let getFantasy = axios.post(url, addGenre("fantasy"), headers);
+      let getThriller = axios.post(url, addGenre("thriller"), headers);
+      let getScifi = axios.post(url, addGenre("sci-fi"), headers);
+
+      console.log("starting to get the data");
+      const [
+        action,
+        adventure,
+        comedy,
+        fantasy,
+        thriller,
+        scifi
+      ] = await Promise.all([
+        getAction,
+        getAdventure,
+        getComedy,
+        getFantasy,
+        getThriller,
+        getScifi
+      ]);
+
+      let data = {
+        Action: action.data.data.Page.media,
+        Adventure: adventure.data.data.Page.media,
+        Comedy: comedy.data.data.Page.media,
+        Fantasy: fantasy.data.data.Page.media,
+        Thriller: thriller.data.data.Page.media,
+        Scifi: scifi.data.data.Page.media
+      };
+
+      let dataCollection = await data;
+      return dataCollection;
+    } catch (error) {
+      console.log(error);
+    }
   }
-  coverImage {
-    medium
+
+  var trendingQuery = `
+query {
+  Media (sort: TRENDING_DESC, type: ANIME){
+    id
+    title {
+      romaji
+      native
+    }
+    bannerImage
+    coverImage {
+      large
+    }
+    description
   }
 }
 `;
 
-  // Define the config we'll need for our Api request
-  var url = "https://graphql.anilist.co",
-    options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        query: query
-        // variables: variables
-      })
-    };
-
-  // Make the HTTP Api request
-  return fetch(url, options)
-    .then(handleResponse)
-    .then(handleData)
-    .catch(handleError);
-
-  function handleResponse(response) {
-    return response.json().then(function(json) {
-      return response.ok ? json : Promise.reject(json);
-    });
+  async function getTrendingHeader() {
+    try {
+      let trendingData = axios.post(url, { query: trendingQuery }, headers)
+      let trendingHeader = await trendingData;
+      return trendingHeader.data.data.Media;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  function handleData(data) {
-    console.log(data.data);
-    return { animeGenres: data.data };
-  }
-
-  function handleError(error) {
-    alert("Error, check console");
-    console.error(error);
-  }
+  return { trending: await getTrendingHeader(), data: await getListData() };
 };
-
-export default Index;

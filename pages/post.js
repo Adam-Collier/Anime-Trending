@@ -1,59 +1,41 @@
 import Layout from "../components/MyLayout.js";
 let fetch = require("isomorphic-unfetch");
+import AnimeHeader from "../components/AnimeHeader";
 
 const Post = ({ show }) => (
   <Layout>
-    {console.log(show[0].coverImage.medium)}
-    {/* <h1>{props.router.query.id}</h1> */}
-    <img className="banner" src={show[0].bannerImage} alt="" />
-    <img src={show[0].coverImage.large} alt="" />
-
-    <style jsx global>{`
-      .banner {
-        width: 100%;
-      }
-    `}</style>
+    <AnimeHeader data={show} />
   </Layout>
 );
 
-Post.getInitialProps = async function(context) {
-  console.log(context);
+Post.getInitialProps = async function (context) {
   const { id } = context.query;
 
   var query = `
 query ($id: Int){
-  Page{
-    media (id: $id, type: ANIME){
-      id
-      title {
-        romaji
-        english
-        native
-        userPreferred
-      }
-      bannerImage
-      coverImage {
-        extraLarge
-        large
-        medium
-      }
-      rankings {
-        id
-        context
-      }
-      stats{
-        scoreDistribution {
-          score
-          amount
-        }
-      }
+  Media (id: $id, type: ANIME){
+    id
+    title {
+      romaji
+      english
+      native
+      userPreferred
     }
-    pageInfo {
-      total
-      perPage
-      currentPage
-      lastPage
-      hasNextPage
+    bannerImage
+    coverImage {
+      medium
+      large
+    }
+    description
+    rankings {
+      id
+      context
+    }
+    stats {
+      scoreDistribution {
+        score
+        amount
+      }
     }
   }
 }
@@ -78,6 +60,10 @@ query ($id: Int){
       })
     };
 
+  fetch(`https://kitsu.io/api/edge/episodes?filter%5BmediaType%5D=Anime&filter%5Bmedia_id%5D=13209&sort=number`)
+    .then((response) => response.json())
+    .then(data => console.log(data));
+
   // Make the HTTP Api request
   return fetch(url, options)
     .then(handleResponse)
@@ -85,13 +71,13 @@ query ($id: Int){
     .catch(handleError);
 
   function handleResponse(response) {
-    return response.json().then(function(json) {
+    return response.json().then(function (json) {
       return response.ok ? json : Promise.reject(json);
     });
   }
 
   function handleData(data) {
-    return { show: data.data.Page.media };
+    return { show: data.data.Media };
   }
 
   function handleError(error) {
