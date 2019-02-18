@@ -1,10 +1,9 @@
 import React from "react";
 import { withRouter } from "next/router";
-import Readmore from "./ReadMore";
+import ReadMore from "./ReadMore";
 
 const animeHeader = props => {
   let data = props.data;
-  console.log("this is the data", data);
   return (
     <div>
       <div className="banner">
@@ -18,7 +17,7 @@ const animeHeader = props => {
           {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
           <h1>{data.attributes.titles.en}</h1>
           <h2>{data.attributes.titles.ja_jp}</h2>
-          <Readmore synopsis={data.attributes.synopsis} />
+          <ReadMore synopsis={data.attributes.synopsis} />
         </div>
       </div>
       <style jsx>
@@ -58,9 +57,6 @@ const animeHeader = props => {
             width: 100%;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-          }
-          .description {
-            padding-top: 0.5rem;
           }
           h1 {
             margin-top: 0px;
