@@ -14,14 +14,14 @@ const ReadMore = props => {
         {props.synopsis}
       </p>
       <p onClick={toggle}>{toggleState ? `read more` : `read less`}</p>
-      <style jsx global>{`
+      <style jsx>{`
         p {
           color: #ffffff;
           cursor: pointer;
         }
         .synopsis {
           position: relative;
-          height: 140px;
+          height: 119px;
           overflow: hidden;
         }
         .synopsis:after {
