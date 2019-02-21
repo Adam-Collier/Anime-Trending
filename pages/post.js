@@ -2,6 +2,8 @@ import Layout from "../components/MyLayout.js";
 import axios from "axios";
 import AnimeHeader from "../components/AnimeHeader";
 import AnimeContent from "../components/AnimeContent";
+
+import Tabs from "../components/Tabs";
 import EpisodeList from "../components/EpisodeList";
 
 const Post = ({ header, episodes }) => {
@@ -10,7 +12,20 @@ const Post = ({ header, episodes }) => {
     <Layout>
       <AnimeHeader data={header} />
       <AnimeContent>
-        <EpisodeList data={episodes} />
+        <Tabs>
+          <div label="Episodes">
+            <EpisodeList data={episodes} />
+          </div>
+          <div label="Gator">
+            See ya later, <em>Alligator</em>!
+          </div>
+          <div label="Croc">
+            After 'while, <em>Crocodile</em>!
+          </div>
+          <div label="Sarcosuchus">
+            Nothing to see here, this tab is <em>extinct</em>!
+          </div>
+        </Tabs>
       </AnimeContent>
     </Layout>
   );
