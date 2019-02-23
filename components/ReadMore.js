@@ -21,7 +21,7 @@ const ReadMore = props => {
         }
         .synopsis {
           position: relative;
-          height: 119px;
+          height: 109px;
           overflow: hidden;
         }
         .synopsis:after {
