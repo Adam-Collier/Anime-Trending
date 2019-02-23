@@ -1,15 +1,16 @@
 import React from "react";
 
-const AnimeContent = ({ children }) => {
+const AnimeContent = ({ children, columns, rows }) => {
   return (
     <div>
       {children}
       <style jsx>
         {`
           div {
-            padding-top: 80px;
-            max-width: 900px;
-            margin: 0 auto;
+            display: grid;
+            grid-template-columns: ${columns};
+            grid-template-rows: ${rows};
+            max-width: 100vw;
           }
         `}
       </style>
