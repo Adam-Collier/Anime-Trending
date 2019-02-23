@@ -22,10 +22,6 @@ const EpisodeList = ({ data }) => {
         <hr />
         <style jsx>
           {`
-            .description {
-              padding-left: 20px;
-              width: 80%;
-            }
             .episode,
             .description {
               display: flex;
