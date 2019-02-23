@@ -4,7 +4,7 @@ import ReadMore from "./ReadMore";
 import Link from "next/link";
 
 const animeHeader = props => {
-  let data = props.data;
+  let { data } = props;
 
   let ConditionalLink = ({ children }) => {
     return props.router.pathname === "/" ? (
@@ -16,32 +16,35 @@ const animeHeader = props => {
     );
   };
 
+  let stickyCover = props.router.pathname === "/" ? "relative" : "sticky";
+
   return (
-    <div>
+    <Fragment>
       <div className="banner">
         <img src={data.attributes.coverImage.large} alt="" />
       </div>
-      <div className="content">
-        <div className="cover">
-          <ConditionalLink>
-            <img src={data.attributes.posterImage.medium} alt="" />
-          </ConditionalLink>
-        </div>
-        <div className="description">
-          {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
-          <ConditionalLink>
-            <Fragment>
-              <h1>{data.attributes.titles.en}</h1>
-              <h2>{data.attributes.titles.ja_jp}</h2>
-            </Fragment>
-          </ConditionalLink>
-          <ReadMore synopsis={data.attributes.synopsis} />
-        </div>
+      <div className="cover">
+        <ConditionalLink>
+          <img src={data.attributes.posterImage.medium} alt="" />
+        </ConditionalLink>
+      </div>
+      <div className="description">
+        {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
+        <ConditionalLink>
+          <Fragment>
+            <h1>{data.attributes.titles.en}</h1>
+            <h2>{data.attributes.titles.ja_jp}</h2>
+          </Fragment>
+        </ConditionalLink>
+        <ReadMore synopsis={data.attributes.synopsis} />
       </div>
       <style jsx>
         {`
           .banner {
+            grid-row: 1/2;
+            grid-column: 1/5;
             position: relative;
+            z-index: -1;
           }
           .banner:after {
             content: "";
@@ -59,7 +62,6 @@ const animeHeader = props => {
           }
           .content {
             position: relative;
-            width: 80%;
             margin: 0 auto;
             margin-top: -220px;
             z-index: 3;
@@ -67,14 +69,22 @@ const animeHeader = props => {
           }
           .cover {
             width: 25%;
-            min-width: 170px;
-            max-width: 240px;
-            margin-right: 30px;
+            width: 210px;
+            grid-column: 2/3;
+            grid-row: 2/4;
+            margin-top: -220px;
           }
           .cover img {
             width: 100%;
+            position: ${stickyCover};
+            top: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+          }
+          .description {
+            grid-row: 2/3;
+            grid-column: 3/4;
+            margin-top: -220px;
           }
           h1 {
             margin-top: 0px;
@@ -94,7 +104,7 @@ const animeHeader = props => {
           }
         `}
       </style>
-    </div>
+    </Fragment>
   );
 };
 
