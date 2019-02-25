@@ -10,8 +10,8 @@ const ReadMore = props => {
   return (
     <div>
       <div />
-      <p className={`synopsis ${!toggleState ? "expand" : ""}`}>
-        {props.synopsis}
+      <p className={`description ${!toggleState ? "expand" : ""}`}>
+        {props.data}
       </p>
       <p onClick={toggle}>{toggleState ? `read more` : `read less`}</p>
       <style jsx>{`
@@ -19,12 +19,12 @@ const ReadMore = props => {
           color: #ffffff;
           cursor: pointer;
         }
-        .synopsis {
+        .description {
           position: relative;
-          height: 109px;
+          height: ${props.height ? props.height : "109px"};
           overflow: hidden;
         }
-        .synopsis:after {
+        .description:after {
           content: "";
           position: absolute;
           bottom: 0;
