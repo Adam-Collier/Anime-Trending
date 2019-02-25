@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 
 const EpisodeList = ({ data }) => {
   return data.map((x, i) => {
-    console.log(x.attributes.thumbnail);
     return (
       <Fragment>
         <div className="episode" key={i}>
@@ -22,6 +21,9 @@ const EpisodeList = ({ data }) => {
         <hr />
         <style jsx>
           {`
+            .episode {
+              padding: 15px 0px;
+            }
             .episode,
             .description {
               display: flex;
