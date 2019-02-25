@@ -29,8 +29,12 @@ const Tab = props => {
           }
 
           .tab-list-active {
-            border: solid #ccc;
-            border-width: 1px 1px 0 1px;
+             {
+              /* border: solid #ccc; */
+            }
+             {
+              /* border-width: 1px 1px 0 1px; */
+            }
           }
         `}
       </style>
