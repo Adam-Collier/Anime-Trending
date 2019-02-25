@@ -6,13 +6,13 @@ import AnimeContent from "../components/AnimeContent";
 
 import Tabs from "../components/Tabs";
 import EpisodeList from "../components/EpisodeList";
+import CharacterList from "../components/CharacterList";
 
-const Post = ({ header, episodes }) => {
-  console.log(episodes);
+const Post = ({ header, episodes, characters }) => {
   return (
     <Layout>
       <AnimeContent
-        columns="auto 250px minmax(auto, 700px) auto"
+        columns="minmax(0, 1fr) 250px 700px minmax(0, 1fr)"
         rows="auto auto auto auto"
       >
         <AnimeHeader data={header} />
@@ -20,8 +20,8 @@ const Post = ({ header, episodes }) => {
           <div label="Episodes">
             <EpisodeList data={episodes} />
           </div>
-          <div label="Gator">
-            See ya later, <em>Alligator</em>!
+          <div label="Characters">
+            <CharacterList data={characters} />
           </div>
           <div label="Croc">
             After 'while, <em>Crocodile</em>!
@@ -60,9 +60,22 @@ Post.getInitialProps = async function(context) {
     }
   }
 
+  async function getCharacterList() {
+    try {
+      let data = axios.get(
+        `https://kitsu.io/api/edge/castings?filter%5Bmedia_type%5D=Anime&filter%5Bmedia_id%5D=${id}&filter%5Bis_character%5D=true&filter%5Blanguage%5D=Japanese&include=character&sort=-featured`
+      );
+      let episodeList = await data;
+      return episodeList.data.included;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     header: await getTrendingHeader(),
-    episodes: await getEpisodeList()
+    episodes: await getEpisodeList(),
+    characters: await getCharacterList()
   };
 };
 
