@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "serve": "NODE_ENV=production node server.js",
-    "serve-dev": "node server.js"
+    "serve-dev": "node server.js",
+    "export": "next export",
+    "out": "serve out"
   },
   "keywords": [],
   "author": "",
@@ -26,5 +28,8 @@
     "react-dom": "^16.8.2",
     "react-html-parser": "^2.0.2",
     "react-markdown": "^4.0.6"
+  },
+  "devDependencies": {
+    "serve": "^10.1.2"
   }
 }
