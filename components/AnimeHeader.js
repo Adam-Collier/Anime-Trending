@@ -4,7 +4,7 @@ import ReadMore from "./ReadMore";
 import Link from "next/link";
 
 const animeHeader = props => {
-  let { data } = props;
+  let { attributes: data } = props.data;
 
   let ConditionalLink = ({ children }) => {
     return props.router.pathname === "/" ? (
@@ -21,22 +21,29 @@ const animeHeader = props => {
   return (
     <Fragment>
       <div className="banner">
-        <img src={data.attributes.coverImage.large} alt="" />
+        <img
+          src={
+            data.coverImage
+              ? data.coverImage.large
+              : `/static/default-cover.jpg`
+          }
+          alt=""
+        />
       </div>
       <div className="cover">
         <ConditionalLink>
-          <img src={data.attributes.posterImage.medium} alt="" />
+          <img src={data.posterImage.medium} alt="" />
         </ConditionalLink>
       </div>
       <div className="description">
         {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
         <ConditionalLink>
           <Fragment>
-            <h1>{data.attributes.titles.en}</h1>
-            <h2>{data.attributes.titles.ja_jp}</h2>
+            <h1>{data.titles.en}</h1>
+            <h2>{data.titles.ja_jp}</h2>
           </Fragment>
         </ConditionalLink>
-        <ReadMore data={data.attributes.synopsis} />
+        <ReadMore data={data.synopsis} />
       </div>
       <style jsx>
         {`
