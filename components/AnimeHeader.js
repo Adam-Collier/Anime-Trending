@@ -36,7 +36,7 @@ const animeHeader = props => {
             <h2>{data.attributes.titles.ja_jp}</h2>
           </Fragment>
         </ConditionalLink>
-        <ReadMore synopsis={data.attributes.synopsis} />
+        <ReadMore data={data.attributes.synopsis} />
       </div>
       <style jsx>
         {`
@@ -72,7 +72,7 @@ const animeHeader = props => {
             width: 210px;
             grid-column: 2/3;
             grid-row: 2/4;
-            margin-top: -220px;
+            margin-top: -230px;
           }
           .cover img {
             width: 100%;

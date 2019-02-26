@@ -56,6 +56,22 @@ const AnimeCategories = ({ data }) => (
         grid-column: 1/3;
         grid-row: 3/4;
       }
+      section {
+        margin-bottom: 50px;
+        border-radius: 5px;
+        position: relative;
+        width: 100vw;
+      }
+      section:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 100vw;
+        bottom: -25px;
+        height: 50%;
+        z-index: 1;
+        background: linear-gradient(to top, #1f202c 20%, rgba(0, 0, 0, 0));
+      }
       h1 {
         font-weight: 600;
         font-size: 2rem;
@@ -73,32 +89,16 @@ const AnimeCategories = ({ data }) => (
         overflow-x: auto;
         position: relative;
       }
-      .animelist:before,
-      .animelist:after {
+      section:after {
         content: "";
         position: absolute;
         top: 0;
         bottom: 0;
         width: 60px;
       }
-      .animelist:after {
+      section:after {
         background: linear-gradient(to left, #1f202c 20%, rgba(0, 0, 0, 0));
         right: 0;
-      }
-      section {
-        margin-bottom: 100px;
-        border-radius: 5px;
-        position: relative;
-      }
-      section:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        width: 100vw;
-        bottom: -25px;
-        height: 50%;
-        z-index: 1;
-        background: linear-gradient(to top, #1f202c 20%, rgba(0, 0, 0, 0));
       }
     `}</style>
   </div>

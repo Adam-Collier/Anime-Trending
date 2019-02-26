@@ -42,11 +42,11 @@ const Tabs = props => {
             border-bottom: 1px solid #ccc;
             padding-left: 0;
             margin-top: 0;
-            margin-bottom: 30px;
             position: sticky;
             top: 0px;
             background: #1f202c;
             padding-top: 10px;
+            z-index: 2;
           }
         `}
       </style>
