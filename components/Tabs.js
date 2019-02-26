@@ -16,7 +16,6 @@ const Tabs = props => {
       <ol className="tab-list">
         {children.map(child => {
           const { label } = child.props;
-
           return (
             <Tab
               activeTab={activeTab}
@@ -33,6 +32,24 @@ const Tabs = props => {
           return child.props.children;
         })}
       </div>
+      <style jsx>
+        {`
+          .tabs {
+            grid-row: 3/4;
+            grid-column: 3/4;
+          }
+          .tab-list {
+            border-bottom: 1px solid #ccc;
+            padding-left: 0;
+            margin-top: 0;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0px;
+            background: #1f202c;
+            padding-top: 10px;
+          }
+        `}
+      </style>
     </div>
   );
 };

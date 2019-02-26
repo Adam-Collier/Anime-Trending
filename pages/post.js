@@ -1,6 +1,7 @@
 import Layout from "../components/MyLayout.js";
 import axios from "axios";
-import AnimeHeader from "../components/AnimeHeader";
+
+import AnimeHeader from "../components/AnimeHeader.js";
 import AnimeContent from "../components/AnimeContent";
 
 import Tabs from "../components/Tabs";
@@ -10,8 +11,11 @@ const Post = ({ header, episodes }) => {
   console.log(episodes);
   return (
     <Layout>
-      <AnimeHeader data={header} />
-      <AnimeContent>
+      <AnimeContent
+        columns="auto 250px minmax(auto, 700px) auto"
+        rows="auto auto auto auto"
+      >
+        <AnimeHeader data={header} />
         <Tabs>
           <div label="Episodes">
             <EpisodeList data={episodes} />
