@@ -8,10 +8,7 @@ import AnimeCategories from "../components/AnimeCategories.js";
 export default function Index({ header, data }) {
   return (
     <Layout>
-      <AnimeContent
-        columns="minmax(0, 1fr) 250px 700px minmax(0, 1fr)"
-        rows="auto auto auto auto"
-      >
+      <AnimeContent>
         <AnimeHeader data={header} />
         <AnimeCategories data={data} />
       </AnimeContent>
