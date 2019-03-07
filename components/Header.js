@@ -23,7 +23,7 @@ const Header = () => (
     <style jsx>
       {`
         .root {
-          padding: 20px 50px;
+          padding: 20px 50px 20px 10px;
           background: #181821;
         }
         svg {
