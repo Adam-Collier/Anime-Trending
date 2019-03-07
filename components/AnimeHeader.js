@@ -35,7 +35,7 @@ const animeHeader = props => {
           <img src={data.posterImage.medium} alt="" />
         </ConditionalLink>
       </div>
-      <div className="description">
+      <div className="titles">
         {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
         <ConditionalLink>
           <Fragment>
@@ -43,12 +43,14 @@ const animeHeader = props => {
             <h2>{data.titles.ja_jp}</h2>
           </Fragment>
         </ConditionalLink>
+      </div>
+      <div className="read-more">
         <ReadMore data={data.synopsis} />
       </div>
       <style jsx>
         {`
           .banner {
-            grid-row: 1/2;
+            grid-row: 1/4;
             grid-column: 1/5;
             position: relative;
             z-index: -1;
@@ -56,10 +58,10 @@ const animeHeader = props => {
           .banner:after {
             content: "";
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 100%;
+            height: 400px;
             background: linear-gradient(to top, #1f202c 20%, rgba(0, 0, 0, 0));
           }
           .banner img {
@@ -78,8 +80,7 @@ const animeHeader = props => {
             width: 25%;
             width: 210px;
             grid-column: 2/3;
-            grid-row: 2/4;
-            margin-top: -230px;
+            grid-row: 2/5;
           }
           .cover img {
             width: 100%;
@@ -92,6 +93,11 @@ const animeHeader = props => {
             grid-row: 2/3;
             grid-column: 3/4;
             margin-top: -220px;
+            --gradient-background: linear-gradient(
+              to top,
+              #1f202c 20%,
+              rgba(31, 32, 44, 0)
+            );
           }
           h1 {
             margin-top: 0px;
@@ -108,6 +114,35 @@ const animeHeader = props => {
           p {
             margin-top: 8px;
             width: 60%;
+          }
+          .titles {
+            grid-column: 3/4;
+            grid-row: 2/3;
+          }
+          .read-more {
+            grid-column: 3/4;
+            grid-row: 3/4;
+          }
+          @media (max-width: 768px) {
+            .cover {
+              grid-column: 3/4;
+              grid-row: 2/3;
+              width: 100%;
+            }
+            .cover img {
+              position: relative;
+            }
+            .titles {
+              grid-column: 2/3;
+              grid-row: 2/3;
+              width: calc(100% - 10px);
+              align-self: end;
+            }
+            .read-more {
+              padding-top: 20px;
+              grid-column: 2/4;
+              grid-row: 3/4;
+            }
           }
         `}
       </style>
