@@ -52,9 +52,9 @@ const AnimeCategories = ({ data }) => (
     <style jsx>{`
       .root {
         position: relative;
-        padding-top: 100px;
         grid-column: 1/3;
         grid-row: 4/5;
+        padding-top: 60px;
       }
       section {
         margin-bottom: 50px;

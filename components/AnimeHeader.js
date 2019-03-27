@@ -8,8 +8,10 @@ const animeHeader = props => {
 
   let ConditionalLink = ({ children }) => {
     return props.router.pathname === "/" ? (
-      <Link as={`/anime/${data.id}`} href={`/post?id=${data.id}`}>
-        <a>{children}</a>
+      <Link as={`/anime/${props.data.id}`} href={`/post?id=${props.data.id}`}>
+        <a aria-label="Read more about the biggest trending anime">
+          {children}
+        </a>
       </Link>
     ) : (
       children
@@ -72,7 +74,6 @@ const animeHeader = props => {
           .content {
             position: relative;
             margin: 0 auto;
-            margin-top: -220px;
             z-index: 3;
             display: flex;
           }
@@ -80,7 +81,7 @@ const animeHeader = props => {
             width: 25%;
             width: 210px;
             grid-column: 2/3;
-            grid-row: 2/5;
+            grid-row: 2/4;
           }
           .cover img {
             width: 100%;
@@ -89,7 +90,8 @@ const animeHeader = props => {
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
           }
-          .description {
+           {
+            /* .description {
             grid-row: 2/3;
             grid-column: 3/4;
             margin-top: -220px;
@@ -98,6 +100,7 @@ const animeHeader = props => {
               #1f202c 20%,
               rgba(31, 32, 44, 0)
             );
+          } */
           }
           h1 {
             margin-top: 0px;
