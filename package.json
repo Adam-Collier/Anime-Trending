@@ -27,7 +27,8 @@
     "react-apollo": "^2.4.1",
     "react-dom": "^16.8.2",
     "react-html-parser": "^2.0.2",
-    "react-markdown": "^4.0.6"
+    "react-markdown": "^4.0.6",
+    "shortid": "^2.2.14"
   },
   "devDependencies": {
     "serve": "^10.1.2"

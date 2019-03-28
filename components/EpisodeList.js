@@ -4,7 +4,7 @@ const EpisodeList = ({ data }) => {
   return data.map((x, i) => {
     return (
       <Fragment>
-        <div className="episode" key={i}>
+        <div className="episode" key={x.id}>
           <div className="description">
             <h2>{x.attributes.number}</h2>
             <div className="titles">

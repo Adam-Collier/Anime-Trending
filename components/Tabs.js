@@ -1,4 +1,5 @@
 import { useState } from "react";
+import shortid from "shortid"
 import Tab from "../components/Tab";
 
 const Tabs = props => {
@@ -15,11 +16,12 @@ const Tabs = props => {
     <div className="tabs">
       <ol className="tab-list">
         {children.map(child => {
+          const key = shortid.generate()
           const { label } = child.props;
           return (
             <Tab
               activeTab={activeTab}
-              key={label}
+              key={key}
               label={label}
               onClick={onClickTabItem}
             />
