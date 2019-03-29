@@ -28,7 +28,7 @@ module.exports = {
     const pages = animeIds.reduce(
       (pages, id) =>
         Object.assign({}, pages, {
-          [`/post/${id}`]: {
+          [`/anime/${id}`]: {
             page: "/post",
             query: { id: id }
           }

@@ -46,6 +46,13 @@ const CharacterList = ({ data }) => {
               object-fit: cover;
               object-position: center center;
             }
+            .description {
+              --gradient-background: linear-gradient(
+                to top,
+                #19191f 20%,
+                rgba(25, 25, 31, 0)
+              );
+            }
             h3 {
               margin-top: 0px;
               margin-bottom: 10px;
@@ -56,6 +63,22 @@ const CharacterList = ({ data }) => {
             }
             p {
               margin-bottom: 0px;
+            }
+            @media (max-width: 768px) {
+              .character {
+                display: grid;
+                grid-template-columns: 1fr 2.5fr;
+              }
+              .image {
+                width: calc(100% - 10px);
+                height: 150px;
+              }
+              img {
+                width: 100%;
+              }
+              .description {
+                width: 100%;
+              }
             }
           `}
         </style>

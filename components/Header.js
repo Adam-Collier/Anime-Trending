@@ -3,7 +3,7 @@ import Link from "next/link";
 const Header = () => (
   <div className="root">
     <Link href="/">
-      <a>
+      <a aria-label="Go back to AnimeBeast">
         <svg
           viewBox="0 0 249 39"
           xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@ const Header = () => (
     <style jsx>
       {`
         .root {
-          padding: 20px 50px;
+          padding: 20px 50px 20px 10px;
           background: #181821;
         }
         svg {

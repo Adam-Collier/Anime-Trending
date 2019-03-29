@@ -18,7 +18,6 @@ const EpisodeList = ({ data }) => {
             </p>
           </div>
         </div>
-        <hr />
         <style jsx>
           {`
             .episode {
@@ -32,7 +31,7 @@ const EpisodeList = ({ data }) => {
             .titles {
               line-height: 1.4;
               width: 35%;
-              margin-right: 5%;
+              margin-right: 3%;
             }
             h2,
             h3,
@@ -40,7 +39,8 @@ const EpisodeList = ({ data }) => {
               margin-top: 0;
             }
             h2 {
-              margin-right: 2.5%;
+              padding-left: 17px;
+              margin-right: 5%;
             }
             h3 {
               margin-bottom: 10px;
@@ -50,13 +50,13 @@ const EpisodeList = ({ data }) => {
               margin: 0px;
             }
             p {
+              padding-right: 10px;
               width: 65%;
             }
             hr {
               display: block;
               height: 1px;
               border: 0;
-              border-top: 1px solid rgba(255, 255, 255, 0.3);
               margin: 1em 0;
               padding: 0;
             }
