@@ -101,9 +101,6 @@ const animeHeader = props => {
           h1 {
             margin-top: 0px;
             margin-bottom: 0px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
           }
           h2 {
             margin-top: 8px;
@@ -128,7 +125,14 @@ const animeHeader = props => {
             grid-column: 3/4;
             grid-row: 3/4;
           }
-          @media (max-width: 768px) {
+          @media (min-width: 768px) {
+            h1 {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+          }
+          @media (max-width: 767px) {
             .cover {
               grid-column: 3/4;
               grid-row: 2/3;
