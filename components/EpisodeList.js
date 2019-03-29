@@ -18,7 +18,6 @@ const EpisodeList = ({ data }) => {
             </p>
           </div>
         </div>
-        <hr />
         <style jsx>
           {`
             .episode {
@@ -58,9 +57,6 @@ const EpisodeList = ({ data }) => {
               display: block;
               height: 1px;
               border: 0;
-               {
-                /* border-top: 1px solid rgba(255, 255, 255, 0.3); */
-              }
               margin: 1em 0;
               padding: 0;
             }
