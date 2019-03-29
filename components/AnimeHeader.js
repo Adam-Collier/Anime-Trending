@@ -8,11 +8,13 @@ const animeHeader = props => {
 
   let ConditionalLink = ({ children }) => {
     return props.router.pathname === "/" ? (
-      <Link as={`/anime/${props.data.id}`} href={`/post?id=${props.data.id}`}>
-        <a aria-label="Read more about the biggest trending anime">
-          {children}
-        </a>
-      </Link>
+      <Fragment>
+        <Link as={`/anime/${props.data.id}`} href={`/post?id=${props.data.id}`}>
+          <a aria-label="Read more about the biggest trending anime">
+            {children}
+          </a>
+        </Link>
+      </Fragment>
     ) : (
       children
     );
@@ -81,7 +83,7 @@ const animeHeader = props => {
             width: 25%;
             width: 210px;
             grid-column: 2/3;
-            grid-row: 2/4;
+            grid-row: 2/5;
           }
           .cover img {
             width: 100%;
@@ -90,21 +92,18 @@ const animeHeader = props => {
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
           }
-           {
-            /* .description {
-            grid-row: 2/3;
-            grid-column: 3/4;
-            margin-top: -220px;
-            --gradient-background: linear-gradient(
-              to top,
-              #1f202c 20%,
-              rgba(31, 32, 44, 0)
-            );
-          } */
+          .cover a img {
+            margin-top: -10px;
+          }
+          :global(a > img) {
+            margin-top: -10px;
           }
           h1 {
             margin-top: 0px;
             margin-bottom: 0px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
           h2 {
             margin-top: 8px;
@@ -113,12 +112,15 @@ const animeHeader = props => {
           h3 {
             margin: 0;
             margin-bottom: 6px;
+            position: absolute;
+            top: -26px;
           }
           p {
             margin-top: 8px;
             width: 60%;
           }
           .titles {
+            position: relative;
             grid-column: 3/4;
             grid-row: 2/3;
           }

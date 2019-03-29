@@ -37,7 +37,7 @@ const ReadMore = props => {
           height: 70px;
         }
         .expand {
-          height: 100%;
+          height: auto;
         }
         .expand:after {
           background: linear-gradient(

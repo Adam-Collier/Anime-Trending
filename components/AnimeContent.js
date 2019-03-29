@@ -9,7 +9,7 @@ const AnimeContent = ({ children, columns, rows }) => {
           div {
             display: grid;
             grid-template-columns: minmax(0, 1fr) 250px 700px minmax(0, 1fr);
-            grid-template-rows: 150px auto auto auto auto;
+            grid-template-rows: 150px 80px auto auto auto;
             max-width: 100vw;
           }
 
