@@ -6,6 +6,10 @@ const Layout = props => (
     <Head>
       <title>My page title</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta
+        name="Description"
+        content="Anime Beast. the best place for trending Anime."
+      />
     </Head>
     <Header />
     <div>{props.children}</div>
