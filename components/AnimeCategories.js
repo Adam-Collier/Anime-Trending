@@ -5,7 +5,7 @@ const AnimeItem = ({ anime }) => (
     <Link as={`/anime/${anime.id}`} href={`/post?id=${anime.id}`}>
       <div>
         <a>
-          <img src={anime.attributes.posterImage.tiny} alt="" />
+          <img src={anime.attributes.posterImage.small} alt="" />
         </a>
       </div>
     </Link>
