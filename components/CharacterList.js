@@ -5,10 +5,9 @@ import ReadMore from "./ReadMore";
 
 const CharacterList = ({ data }) => {
   return data.map((x, i) => {
-    console.log(x.attributes);
     return (
       <Fragment>
-        <div className="character" key={i}>
+        <div className="character" key={x.attributes.malIds}>
           <div className="image">
             <img src={x.attributes.image.original} alt="" />
           </div>
