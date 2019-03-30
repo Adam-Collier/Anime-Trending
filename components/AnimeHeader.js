@@ -28,7 +28,7 @@ const animeHeader = props => {
         <img
           src={
             data.coverImage
-              ? data.coverImage.large
+              ? data.coverImage.small
               : `/static/default-cover.jpg`
           }
           alt=""
@@ -36,7 +36,7 @@ const animeHeader = props => {
       </div>
       <div className="cover">
         <ConditionalLink>
-          <img src={data.posterImage.medium} alt="" />
+          <img src={data.posterImage.small} alt="" />
         </ConditionalLink>
       </div>
       <div className="titles">
