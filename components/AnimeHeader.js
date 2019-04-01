@@ -66,7 +66,11 @@ const animeHeader = props => {
             left: 0;
             right: 0;
             height: 400px;
-            background: linear-gradient(to top, #1f202c 20%, rgba(0, 0, 0, 0));
+            background: linear-gradient(
+              to top,
+              rgba(32, 32, 44, 1) 20%,
+              rgba(32, 32, 44, 0)
+            );
           }
           .banner img {
             width: 100%;
@@ -120,6 +124,14 @@ const animeHeader = props => {
             position: relative;
             grid-column: 3/4;
             grid-row: 2/3;
+          }
+          :global(.read-more p:after) {
+            grid-column: 3/4;
+            --gradient-background: linear-gradient(
+              to top,
+              rgba(32, 32, 44, 0.95) 20%,
+              rgba(32, 32, 44, 0)
+            );
           }
           .read-more {
             grid-column: 3/4;
