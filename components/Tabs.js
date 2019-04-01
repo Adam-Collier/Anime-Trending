@@ -1,5 +1,5 @@
 import { useState } from "react";
-import shortid from "shortid"
+import shortid from "shortid";
 import Tab from "../components/Tab";
 
 const Tabs = props => {
@@ -16,7 +16,7 @@ const Tabs = props => {
     <div className="tabs">
       <ol className="tab-list">
         {children.map(child => {
-          const key = shortid.generate()
+          const key = shortid.generate();
           const { label } = child.props;
           return (
             <Tab
@@ -41,15 +41,16 @@ const Tabs = props => {
             grid-column: 3/4;
             background: #19191f;
             border-radius: 5px 5px 0 0;
-            position: sticky;
+
             top: 10px;
+            margin-top: 30px;
           }
           .tab-list {
             background: #19191f;
             padding: 5px 0 5px 4px;
             margin-top: 0;
-            position: -webkit-sticky;
             position: sticky;
+            transform: translate3d(0, 0, 0);
             top: 10px;
             z-index: 2;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
@@ -67,6 +68,10 @@ const Tabs = props => {
             .tabs {
               grid-row: 4/5;
               grid-column: 1/5;
+              margin-top: 40px;
+            }
+            .tab-list {
+              top: 0px;
             }
           }
         `}
