@@ -17,10 +17,11 @@ const ReadMore = props => {
         p {
           color: #ffffff;
           cursor: pointer;
+          margin-bottom: 0px;
         }
         .description {
           position: relative;
-          height: ${props.height ? props.height : "109px"};
+          height: ${props.height ? props.height : "118px"};
           overflow: hidden;
         }
         .description:after {
@@ -29,11 +30,7 @@ const ReadMore = props => {
           bottom: 0;
           left: 0;
           right: 0;
-          background: linear-gradient(
-            to top,
-            rgba(31, 32, 44, 0.95) 20%,
-            rgba(31, 32, 44, 0)
-          );
+          background: var(--gradient-background);
           height: 70px;
         }
         .expand {
@@ -51,7 +48,7 @@ const ReadMore = props => {
             height: 142px;
           }
           .expand {
-            height: 100%;
+            height: auto;
           }
         }
       `}</style>
