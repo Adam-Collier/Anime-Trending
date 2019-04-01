@@ -34,6 +34,11 @@ const CharacterList = ({ data }) => {
             display: grid;
             grid-template-columns: 18px 120px auto 18px;
             grid-gap: 15px;
+            padding-bottom: 40px;
+          }
+          .character > p {
+            margin-top: 20px;
+            margin-bottom: 0px;
           }
           .image {
             grid-column: 2/3;
