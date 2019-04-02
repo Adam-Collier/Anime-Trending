@@ -4,86 +4,97 @@ import ReactHtmlParser from "react-html-parser";
 import ReadMore from "./ReadMore";
 
 const CharacterList = ({ data }) => {
-  return data.map((x, i) => {
-    return (
-      <Fragment>
-        <div className="character" key={x.attributes.malIds}>
-          <div className="image">
-            <img src={x.attributes.image.original} alt="" />
+  console.log(data);
+  return (
+    <Fragment>
+      {data ? (
+        data.map((x, i) => (
+          <div className="character" key={x.attributes.malIds}>
+            <div className="image">
+              <img src={x.attributes.image.original} alt="" />
+            </div>
+            <div className="description">
+              <h3>{x.attributes.names.en}</h3>
+              <h5>{x.attributes.names.ja_jp}</h5>
+              <ReadMore
+                data={ReactHtmlParser(x.attributes.description)}
+                height="92px"
+              />
+            </div>
           </div>
-          <div className="description">
-            <h3>{x.attributes.names.en}</h3>
-            <h5>{x.attributes.names.ja_jp}</h5>
-            <ReadMore
-              data={ReactHtmlParser(x.attributes.description)}
-              height="192px"
-            />
-          </div>
+        ))
+      ) : (
+        <div className="character">
+          <p>no data available</p>
         </div>
-        <hr />
-        <style jsx>
-          {`
+      )}
+      <style jsx>
+        {`
+          .character {
+            display: grid;
+            grid-template-columns: 18px 120px auto 18px;
+            grid-gap: 15px;
+            padding-bottom: 40px;
+          }
+          .character > p {
+            margin-top: 20px;
+            margin-bottom: 0px;
+          }
+          .image {
+            grid-column: 2/3;
+            width: 100%;
+            height: 192px;
+            overflow: hidden;
+            border-radius: 5px;
+            position: sticky;
+            top: 60px;
+          }
+          img {
+            width: 100%;
+            transform-origin: center center;
+            transform: scale(1.1);
+          }
+          .description {
+            padding-left: 20px;
+          }
+          :global(.description > p:after) {
+            grid-column: 3/4;
+            --gradient-background: linear-gradient(
+              to top,
+              rgba(25, 25, 31, 0.8) 10%,
+              rgba(25, 25, 31, 0)
+            );
+          }
+          h3 {
+            margin-top: 0px;
+            margin-bottom: 10px;
+          }
+          h5 {
+            margin: 0px;
+            color: #adadad;
+          }
+          p {
+            grid-column: 2/3;
+            margin-bottom: 30px;
+          }
+
+          @media (max-width: 768px) {
             .character {
-              display: flex;
-              flex-direction: row;
-              justfy-content: flex-start;
-              align-items: flex-start;
-              padding: 20px 0px;
-            }
-            .image {
-              flex-shrink: 0;
-              width: 144px;
-              height: 228px;
-              overflow: hidden;
-              border-radius: 5px;
-              margin-right: 20px;
-            }
-            img {
-              width: 144px;
-              height: 228px;
-              transform: scale(1.03);
-              object-fit: cover;
-              object-position: center center;
+              width: 100vw;
+              grid-template-columns: 0px 100px auto 0px;
             }
             .description {
-              --gradient-background: linear-gradient(
-                to top,
-                #19191f 20%,
-                rgba(25, 25, 31, 0)
-              );
+              width: calc(100% - 25px);
+              padding-left: 0px;
             }
-            h3 {
-              margin-top: 0px;
-              margin-bottom: 10px;
+            .image {
+              height: 162px;
             }
-            h5 {
-              margin: 0px;
-              color: #adadad;
-            }
-            p {
-              margin-bottom: 0px;
-            }
-            @media (max-width: 768px) {
-              .character {
-                display: grid;
-                grid-template-columns: 1fr 2.5fr;
-              }
-              .image {
-                width: calc(100% - 10px);
-                height: 150px;
-              }
-              img {
-                width: 100%;
-              }
-              .description {
-                width: 100%;
-              }
-            }
-          `}
-        </style>
-      </Fragment>
-    );
-  });
+          }
+        `}
+      </style>
+    </Fragment>
+  );
 };
 
 export default CharacterList;

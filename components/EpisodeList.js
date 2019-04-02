@@ -1,70 +1,65 @@
 import React, { Fragment } from "react";
 
 const EpisodeList = ({ data }) => {
-  return data.map((x, i) => {
-    return (
-      <Fragment>
+  return (
+    <Fragment>
+      {data.map(x => (
         <div className="episode" key={x.id}>
-          <div className="description">
-            <h2>{x.attributes.number}</h2>
-            <div className="titles">
-              <h3>{x.attributes.titles.en_us}</h3>
-              <h5>{x.attributes.titles.ja_jp}</h5>
-            </div>
-            <p>
-              {x.attributes.synopsis
-                ? x.attributes.synopsis
-                : "No description found..."}
-            </p>
+          <h2>{x.attributes.number}</h2>
+          <div className="titles">
+            <h3>{x.attributes.titles.en_us}</h3>
+            <h5>{x.attributes.titles.ja_jp}</h5>
           </div>
+          <p>
+            {x.attributes.synopsis
+              ? x.attributes.synopsis
+              : "No description found..."}
+          </p>
         </div>
-        <style jsx>
-          {`
+      ))}
+      <style jsx>
+        {`
+          .episode {
+            display: grid;
+            grid-template-columns: 60px 2fr 5fr;
+            grid-template-rows: auto;
+            min-height: 150px;
+          }
+          .titles {
+            grid-column: 2/3;
+            line-height: 1.4;
+            padding-right: 15px;
+          }
+          h2,
+          h3,
+          p {
+            margin-top: 0;
+          }
+          h2 {
+            grid-column: 1/2;
+            justify-self: center;
+          }
+          h3 {
+            margin-bottom: 10px;
+          }
+          h5 {
+            color: #adadad;
+            margin: 0px;
+          }
+          p {
+            grid-column: 3/4;
+            padding-right: 10px;
+          }
+          @media (max-width: 768px) {
             .episode {
-              padding: 15px 0px;
+              grid-template-columns: 50px 3fr 5fr;
+              padding-bottom: 20px;
             }
-            .episode,
-            .description {
-              display: flex;
-              min-height: 100px;
-            }
-            .titles {
-              line-height: 1.4;
-              width: 35%;
-              margin-right: 3%;
-            }
-            h2,
-            h3,
-            p {
-              margin-top: 0;
-            }
-            h2 {
-              padding-left: 17px;
-              margin-right: 5%;
-            }
-            h3 {
-              margin-bottom: 10px;
-            }
-            h5 {
-              color: #adadad;
-              margin: 0px;
-            }
-            p {
-              padding-right: 10px;
-              width: 65%;
-            }
-            hr {
-              display: block;
-              height: 1px;
-              border: 0;
-              margin: 1em 0;
-              padding: 0;
-            }
-          `}
-        </style>
-      </Fragment>
-    );
-  });
+          }
+        `}
+      </style>
+    </Fragment>
+  );
 };
 
 export default EpisodeList;

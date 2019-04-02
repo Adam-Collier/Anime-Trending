@@ -54,7 +54,7 @@ const AnimeCategories = ({ data }) => (
         position: relative;
         grid-column: 1/3;
         grid-row: 4/5;
-        padding-top: 60px;
+        padding-top: 100px;
       }
       section {
         margin-bottom: 50px;
@@ -100,6 +100,11 @@ const AnimeCategories = ({ data }) => (
       section:after {
         background: linear-gradient(to left, #1f202c 20%, rgba(0, 0, 0, 0));
         right: 0;
+      }
+      @media (max-width: 768px) {
+        .root {
+          padding-top: 40px;
+        }
       }
     `}</style>
   </div>
