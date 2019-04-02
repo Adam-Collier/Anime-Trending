@@ -53,7 +53,7 @@ const EpisodeList = ({ data }) => {
           @media (max-width: 768px) {
             .episode {
               grid-template-columns: 50px 3fr 5fr;
-              padding-bottom: 20px;
+              padding: 0 5px 20px 0;
             }
           }
         `}

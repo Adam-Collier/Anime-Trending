@@ -24,15 +24,14 @@ const CharacterList = ({ data }) => {
           </div>
         ))
       ) : (
-        <div className="character">
-          <p>no data available</p>
-        </div>
-      )}
+          <div className="character">
+            <p>no data available</p>
+          </div>
+        )}
       <style jsx>
         {`
           .character {
             display: grid;
-            grid-template-columns: 18px 120px auto 18px;
             grid-gap: 15px;
             padding-bottom: 40px;
           }

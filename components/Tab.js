@@ -8,18 +8,15 @@ const Tab = props => {
     onClick(label);
   };
 
-  let className = "tab-list-item";
-
-  if (activeTab === label) {
-    className += " tab-list-active";
-  }
+  let isActive = activeTab === label && "tab-list-active"
 
   return (
-    <li className={className} onClick={onClick}>
-      {label}
+    <li className="tab-list-item" onClick={onClick}>
+      <div className={isActive}>{label}</div>
       <style jsx>
         {`
           .tab-list-item {
+            text-align: center;
             display: inline-block;
             list-style: none;
             margin-bottom: -1px;
@@ -27,14 +24,9 @@ const Tab = props => {
             cursor: pointer;
             border-radius: 3px 3px 0 0;
           }
-
           .tab-list-active {
-             {
-              /* border: solid #ccc; */
-            }
-             {
-              /* border-width: 1px 1px 0 1px; */
-            }
+            padding-bottom: 6px;
+            border-bottom: 2px solid white;
           }
         `}
       </style>

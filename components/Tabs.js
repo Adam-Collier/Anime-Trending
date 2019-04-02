@@ -71,6 +71,7 @@ const Tabs = props => {
               margin-top: 40px;
             }
             .tab-list {
+              grid-column: 2/4;
               top: 0px;
             }
           }

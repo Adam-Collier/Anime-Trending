@@ -1,4 +1,4 @@
-import Layout from "../components/MyLayout.js";
+import Layout from "../components/Layout";
 import axios from "axios";
 
 import AnimeHeader from "../components/AnimeHeader.js";
@@ -26,7 +26,7 @@ const Post = ({ header, episodes, characters }) => {
   );
 };
 
-Post.getInitialProps = async function(context) {
+Post.getInitialProps = async function (context) {
   const { id } = context.query;
 
   async function getTrendingHeader() {

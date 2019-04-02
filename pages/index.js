@@ -1,4 +1,4 @@
-import Layout from "../components/MyLayout.js";
+import Layout from "../components/Layout";
 import axios from "axios";
 
 import AnimeContent from "../components/AnimeContent";
@@ -16,7 +16,7 @@ export default function Index({ header, data }) {
   );
 }
 
-Index.getInitialProps = async function() {
+Index.getInitialProps = async function () {
   let obj = {
     comedy: 160,
     action: 150,
@@ -30,7 +30,7 @@ Index.getInitialProps = async function() {
   let promiseArray = Object.keys(obj).map(x =>
     axios.get(
       `https://kitsu.io/api/edge/trending/anime?limit=15&in_category=true&category=${
-        obj[x]
+      obj[x]
       }`
     )
   );
