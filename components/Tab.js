@@ -3,16 +3,18 @@ import React from "react";
 const Tab = props => {
   const { label, activeTab } = props;
 
-  let onClick = () => {
+  let onClick = event => {
     const { label, onClick } = props;
-    onClick(label);
+    onClick(label, event.target);
   };
 
-  let isActive = activeTab === label && "tab-list-active"
+  let isActive = activeTab === label && "tab-list-active";
 
   return (
-    <li className="tab-list-item" onClick={onClick}>
-      <div className={isActive}>{label}</div>
+    <li className="tab-list-item">
+      <div className={isActive} onClick={onClick}>
+        {label}
+      </div>
       <style jsx>
         {`
           .tab-list-item {
@@ -23,10 +25,6 @@ const Tab = props => {
             padding: 0.5rem 0.75rem;
             cursor: pointer;
             border-radius: 3px 3px 0 0;
-          }
-          .tab-list-active {
-            padding-bottom: 6px;
-            border-bottom: 2px solid white;
           }
         `}
       </style>
