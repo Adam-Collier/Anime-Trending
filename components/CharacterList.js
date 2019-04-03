@@ -1,35 +1,41 @@
 import { Fragment } from "react";
 import ReactHtmlParser from "react-html-parser";
+import shortid from 'shortid'
 
 import ReadMore from "./ReadMore";
 
-const CharacterList = ({ data }) => {
-  console.log(data);
-  return (
-    <Fragment>
-      {data ? (
-        data.map((x, i) => (
-          <div className="character" key={x.attributes.malIds}>
+const CharacterList = ({ data }) => (
+  <Fragment>
+    {data ? (
+      data.map((character) => {
+        const key = shortid.generate()
+        return (
+          <div className="character" key={key}>
             <div className="image">
-              <img src={x.attributes.image.original} alt="" />
+              <img
+                src={character.attributes.image.original}
+                alt={character.attributes.names.en}
+              />
             </div>
             <div className="description">
-              <h3>{x.attributes.names.en}</h3>
-              <h5>{x.attributes.names.ja_jp}</h5>
+              <h3>{character.attributes.names.en}</h3>
+              <h5>{character.attributes.names.ja_jp}</h5>
               <ReadMore
-                data={ReactHtmlParser(x.attributes.description)}
+                data={ReactHtmlParser(character.attributes.description)}
                 height="92px"
               />
             </div>
           </div>
-        ))
-      ) : (
+        )
+      }
+      )
+    ) : (
         <div className="character">
           <p>no data available</p>
         </div>
       )}
-      <style jsx>
-        {`
+    <style jsx>
+      {`
           .character {
             display: grid;
             grid-template-columns: 18px 120px auto 18px;
@@ -92,9 +98,8 @@ const CharacterList = ({ data }) => {
             }
           }
         `}
-      </style>
-    </Fragment>
-  );
-};
+    </style>
+  </Fragment>
+);
 
 export default CharacterList;

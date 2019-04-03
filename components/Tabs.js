@@ -6,7 +6,8 @@ const Tabs = props => {
   let { children } = props;
 
   // Declare a new state variable, which we'll call "count"
-  const [activeTab, setActiveTab] = useState(props.children[0].props.label);
+  const tabLabel = children[0].props.label
+  const [activeTab, setActiveTab] = useState(tabLabel);
 
   const underline = useRef(null);
 
@@ -80,7 +81,7 @@ const Tabs = props => {
             height: 2px;
             width: var(--line-width);
             background: #ffffff;
-            transition: left ease 100ms, width ease-in-out 100ms;
+            transition: left ease 200ms, width ease-in-out 100ms;
           }
           @media (max-width: 768px) {
             .tabs {

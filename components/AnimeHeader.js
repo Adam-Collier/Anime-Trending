@@ -16,11 +16,12 @@ const animeHeader = props => {
         </Link>
       </Fragment>
     ) : (
-      children
-    );
+        children
+      );
   };
 
   let stickyCover = props.router.pathname === "/" ? "relative" : "sticky";
+  const fallback = `/static/default-cover.jpg`
 
   return (
     <Fragment>
@@ -29,7 +30,7 @@ const animeHeader = props => {
           src={
             data.coverImage
               ? data.coverImage.small
-              : `/static/default-cover.jpg`
+              : fallback
           }
           alt=""
         />
