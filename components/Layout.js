@@ -4,7 +4,7 @@ import Header from "./Header";
 const Layout = props => (
   <div>
     <Head>
-      <title>My page title</title>
+      <title>AnimeBeast</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta
         name="Description"

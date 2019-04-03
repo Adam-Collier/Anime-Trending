@@ -79,7 +79,7 @@ const AnimeCategories = ({ data }) => (
         left: 0;
         bottom: -13px;
         z-index: 2;
-        padding-left: 30px;
+        padding: 15px;
         margin: 0;
       }
       .animelist {

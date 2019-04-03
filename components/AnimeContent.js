@@ -15,7 +15,7 @@ const AnimeContent = ({ children, columns, rows }) => {
 
           @media (max-width: 768px) {
             div {
-              grid-template-columns: 6px 1.4fr 1fr 6px;
+              grid-template-columns: 15px 1.4fr 1fr 15px;
               grid-template-rows: 150px auto auto auto auto;
             }
           }

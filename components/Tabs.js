@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import shortid from "shortid";
 import Tab from "../components/Tab";
 
@@ -8,13 +8,20 @@ const Tabs = props => {
   // Declare a new state variable, which we'll call "count"
   const [activeTab, setActiveTab] = useState(props.children[0].props.label);
 
-  let onClickTabItem = tab => {
+  const underline = useRef(null);
+
+  let onClickTabItem = (tab, element) => {
+    let left = element.offsetLeft;
+    let width = element.offsetWidth;
+    underline.current.style.setProperty("--left-position", `${left}px`);
+    underline.current.style.setProperty("--line-width", `${width}px`);
     setActiveTab(tab);
   };
 
   return (
     <div className="tabs">
       <ol className="tab-list">
+        <div className="underline" ref={underline} />
         {children.map(child => {
           const key = shortid.generate();
           const { label } = child.props;
@@ -41,9 +48,9 @@ const Tabs = props => {
             grid-column: 3/4;
             background: #19191f;
             border-radius: 5px 5px 0 0;
-
             top: 10px;
             margin-top: 30px;
+            position: relative;
           }
           .tab-list {
             background: #19191f;
@@ -64,6 +71,17 @@ const Tabs = props => {
             height: 10px;
             background: #1f202c;
           }
+          .underline {
+            --left-position: 16px;
+            --line-width: 66px;
+            position: absolute;
+            left: var(--left-position);
+            bottom: 0;
+            height: 2px;
+            width: var(--line-width);
+            background: #ffffff;
+            transition: left ease 100ms, width ease-in-out 100ms;
+          }
           @media (max-width: 768px) {
             .tabs {
               grid-row: 4/5;
@@ -71,6 +89,7 @@ const Tabs = props => {
               margin-top: 40px;
             }
             .tab-list {
+              grid-column: 2/4;
               top: 0px;
             }
           }
