@@ -1,9 +1,9 @@
-import Layout from "../components/Layout";
-import axios from "axios";
+import Layout from '../components/Layout';
+import axios from 'axios';
 
-import AnimeContent from "../components/AnimeContent";
-import AnimeHeader from "../components/AnimeHeader";
-import AnimeCategories from "../components/AnimeCategories.js";
+import AnimeContent from '../components/AnimeContent';
+import AnimeHeader from '../components/AnimeHeader';
+import AnimeCategories from '../components/AnimeCategories.js';
 
 export default function Index({ header, data }) {
   return (
@@ -16,13 +16,13 @@ export default function Index({ header, data }) {
   );
 }
 
-Index.getInitialProps = async function () {
+Index.getInitialProps = async function() {
   let obj = {
     comedy: 160,
     action: 150,
     fantasy: 156,
     thriller: 159,
-    adventure: 157
+    adventure: 157,
   };
 
   let categories = Object.keys(obj);
@@ -30,7 +30,7 @@ Index.getInitialProps = async function () {
   let promiseArray = Object.keys(obj).map(x =>
     axios.get(
       `https://kitsu.io/api/edge/trending/anime?limit=15&in_category=true&category=${
-      obj[x]
+        obj[x]
       }`
     )
   );
@@ -55,6 +55,6 @@ Index.getInitialProps = async function () {
 
   return {
     data: await categoryLists,
-    header: await getTrendingHeader()
+    header: await getTrendingHeader(),
   };
 };

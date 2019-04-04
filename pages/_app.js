@@ -1,8 +1,8 @@
-import App, { Container } from "next/app";
-import React from "react";
-import withApolloClient from "../lib/with-apollo-client";
-import { ApolloProvider } from "react-apollo";
-
+import App, { Container } from 'next/app';
+import React from 'react';
+import withApolloClient from '../lib/with-apollo-client';
+import { ApolloProvider } from 'react-apollo';
+const food = { asp: '', asf: '' };
 class MyApp extends App {
   render() {
     const { Component, pageProps, apolloClient } = this.props;
@@ -12,9 +12,9 @@ class MyApp extends App {
         <style jsx global>
           {`
             * {
-              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-                "Droid Sans", "Helvetica Neue", sans-serif;
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+                'Droid Sans', 'Helvetica Neue', sans-serif;
             }
             body {
               margin: 0;

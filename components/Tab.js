@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Tab = props => {
   const { label, activeTab } = props;
@@ -8,7 +8,7 @@ const Tab = props => {
     onClick(label, event.target);
   };
 
-  let isActive = activeTab === label && "tab-list-active";
+  let isActive = activeTab === label && 'tab-list-active';
 
   return (
     <li className="tab-list-item">

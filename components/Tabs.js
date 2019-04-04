@@ -1,12 +1,12 @@
-import { useState, useRef } from "react";
-import shortid from "shortid";
-import Tab from "../components/Tab";
+import { useState, useRef } from 'react';
+import shortid from 'shortid';
+import Tab from '../components/Tab';
 
 const Tabs = props => {
   let { children } = props;
 
   // Declare a new state variable, which we'll call "count"
-  const tabLabel = children[0].props.label
+  const tabLabel = children[0].props.label;
   const [activeTab, setActiveTab] = useState(tabLabel);
 
   const underline = useRef(null);
@@ -14,8 +14,8 @@ const Tabs = props => {
   let onClickTabItem = (tab, element) => {
     let left = element.offsetLeft;
     let width = element.offsetWidth;
-    underline.current.style.setProperty("--left-position", `${left}px`);
-    underline.current.style.setProperty("--line-width", `${width}px`);
+    underline.current.style.setProperty('--left-position', `${left}px`);
+    underline.current.style.setProperty('--line-width', `${width}px`);
     setActiveTab(tab);
   };
 
@@ -64,7 +64,7 @@ const Tabs = props => {
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
           }
           .tab-list:after {
-            content: "";
+            content: '';
             position: absolute;
             left: 0;
             right: 0;

@@ -1,4 +1,4 @@
-import AnimeItem from './AnimeItem'
+import AnimeItem from './AnimeItem';
 
 const AnimeCategories = ({ data }) => (
   <div className="root">
@@ -29,7 +29,7 @@ const AnimeCategories = ({ data }) => (
         width: 100vw;
       }
       section:before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         width: 100vw;
@@ -57,7 +57,7 @@ const AnimeCategories = ({ data }) => (
         position: relative;
       }
       section:after {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         bottom: 0;

@@ -1,5 +1,5 @@
-import Head from "next/head";
-import Header from "./Header";
+import Head from 'next/head';
+import Header from './Header';
 
 const Layout = props => (
   <div>

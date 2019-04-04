@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
 const EpisodeList = ({ data }) => (
   <Fragment>
@@ -12,7 +12,7 @@ const EpisodeList = ({ data }) => (
         <p>
           {episode.attributes.synopsis
             ? episode.attributes.synopsis
-            : "No description found..."}
+            : 'No description found...'}
         </p>
       </div>
     ))}
@@ -58,6 +58,6 @@ const EpisodeList = ({ data }) => (
       `}
     </style>
   </Fragment>
-)
+);
 
 export default EpisodeList;

@@ -1,12 +1,12 @@
-import Layout from "../components/Layout";
-import axios from "axios";
+import Layout from '../components/Layout';
+import axios from 'axios';
 
-import AnimeHeader from "../components/AnimeHeader.js";
-import AnimeContent from "../components/AnimeContent";
+import AnimeHeader from '../components/AnimeHeader.js';
+import AnimeContent from '../components/AnimeContent';
 
-import Tabs from "../components/Tabs";
-import EpisodeList from "../components/EpisodeList";
-import CharacterList from "../components/CharacterList";
+import Tabs from '../components/Tabs';
+import EpisodeList from '../components/EpisodeList';
+import CharacterList from '../components/CharacterList';
 
 const Post = ({ header, episodes, characters }) => {
   return (
@@ -26,7 +26,7 @@ const Post = ({ header, episodes, characters }) => {
   );
 };
 
-Post.getInitialProps = async function (context) {
+Post.getInitialProps = async function(context) {
   const { id } = context.query;
 
   async function getTrendingHeader() {
@@ -66,7 +66,7 @@ Post.getInitialProps = async function (context) {
   return {
     header: await getTrendingHeader(),
     episodes: await getEpisodeList(),
-    characters: await getCharacterList()
+    characters: await getCharacterList(),
   };
 };
 
