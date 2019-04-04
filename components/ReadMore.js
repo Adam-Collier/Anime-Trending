@@ -1,15 +1,15 @@
 import react, { Fragment, useState } from "react";
 
 const ReadMore = props => {
-  const [toggleState, setToggleState] = useState("off");
+  const [toggleState, setToggleState] = useState(true);
 
   function toggle() {
-    setToggleState(toggleState === false ? true : false);
+    setToggleState(toggleState === true ? false : true);
   }
 
   return (
     <Fragment>
-      <p className={`description ${!toggleState ? "expand" : ""}`}>
+      <p className={`description ${toggleState ? "" : "expand"}`}>
         {props.data}
       </p>
       <p onClick={toggle}>{toggleState ? `read more` : `read less`}</p>

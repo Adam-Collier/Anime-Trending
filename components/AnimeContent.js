@@ -1,6 +1,6 @@
 import React from "react";
 
-const AnimeContent = ({ children, columns, rows }) => {
+const AnimeContent = ({ children }) => {
   return (
     <div>
       {children}
