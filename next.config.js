@@ -1,7 +1,19 @@
 const axios = require("axios");
+var PrettierPlugin = require("prettier-webpack-plugin");
+
+const prettierOptions = {
+  encoding: 'utf-8',
+  extensions: [".js", ".jsx"],
+  trailingComma: 'es5',
+  singleQuote: true,
+}
 
 module.exports = {
-  async exportPathMap() {
+  webpack: (config, { buildId, dev = true, isServer = false, defaultLoaders, webpack }) => {
+    config.plugins.push(new PrettierPlugin(prettierOptions))
+    return config;
+  },
+  exportPathMap: async () => {
     // we fetch our list of posts, this allow us to dynamically generate the exported pages
     let obj = {
       comedy: 160,
@@ -15,7 +27,7 @@ module.exports = {
       axios
         .get(
           `https://kitsu.io/api/edge/trending/anime?limit=15&in_category=true&category=${
-            obj[x]
+          obj[x]
           }`
         )
         .then(res => res.data.data)
