@@ -3,7 +3,7 @@ import AnimeItem from './AnimeItem'
 const AnimeCategories = ({ data }) => (
   <div className="root">
     {data.map((category, index) => {
-      let categoryName = Object.keys(category)[0];
+      let categoryName = Object.keys(category)[0]
       return (
         <section key={index}>
           <h1>Trending in {categoryName}</h1>
@@ -13,7 +13,7 @@ const AnimeCategories = ({ data }) => (
             ))}
           </div>
         </section>
-      );
+      )
     })}
     <style jsx>{`
       .root {
@@ -29,7 +29,7 @@ const AnimeCategories = ({ data }) => (
         width: 100vw;
       }
       section:before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         width: 100vw;
@@ -57,7 +57,7 @@ const AnimeCategories = ({ data }) => (
         position: relative;
       }
       section:after {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         bottom: 0;
@@ -72,6 +72,6 @@ const AnimeCategories = ({ data }) => (
       }
     `}</style>
   </div>
-);
+)
 
-export default AnimeCategories;
+export default AnimeCategories

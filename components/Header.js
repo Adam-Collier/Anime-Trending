@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 const Header = () => (
   <div className="root">
@@ -33,6 +33,6 @@ const Header = () => (
       `}
     </style>
   </div>
-);
+)
 
-export default Header;
+export default Header
