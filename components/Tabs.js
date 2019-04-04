@@ -1,31 +1,31 @@
-import { useState, useRef } from "react";
-import shortid from "shortid";
-import Tab from "../components/Tab";
+import { useState, useRef } from 'react'
+import shortid from 'shortid'
+import Tab from '../components/Tab'
 
 const Tabs = props => {
-  let { children } = props;
+  let { children } = props
 
   // Declare a new state variable, which we'll call "count"
   const tabLabel = children[0].props.label
-  const [activeTab, setActiveTab] = useState(tabLabel);
+  const [activeTab, setActiveTab] = useState(tabLabel)
 
-  const underline = useRef(null);
+  const underline = useRef(null)
 
   let onClickTabItem = (tab, element) => {
-    let left = element.offsetLeft;
-    let width = element.offsetWidth;
-    underline.current.style.setProperty("--left-position", `${left}px`);
-    underline.current.style.setProperty("--line-width", `${width}px`);
-    setActiveTab(tab);
-  };
+    let left = element.offsetLeft
+    let width = element.offsetWidth
+    underline.current.style.setProperty('--left-position', `${left}px`)
+    underline.current.style.setProperty('--line-width', `${width}px`)
+    setActiveTab(tab)
+  }
 
   return (
     <div className="tabs">
       <ol className="tab-list">
         <div className="underline" ref={underline} />
         {children.map(child => {
-          const key = shortid.generate();
-          const { label } = child.props;
+          const key = shortid.generate()
+          const { label } = child.props
           return (
             <Tab
               activeTab={activeTab}
@@ -33,13 +33,13 @@ const Tabs = props => {
               label={label}
               onClick={onClickTabItem}
             />
-          );
+          )
         })}
       </ol>
       <div className="tab-content">
         {children.map(child => {
-          if (child.props.label !== activeTab) return undefined;
-          return child.props.children;
+          if (child.props.label !== activeTab) return undefined
+          return child.props.children
         })}
       </div>
       <style jsx>
@@ -64,7 +64,7 @@ const Tabs = props => {
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
           }
           .tab-list:after {
-            content: "";
+            content: '';
             position: absolute;
             left: 0;
             right: 0;
@@ -97,7 +97,7 @@ const Tabs = props => {
         `}
       </style>
     </div>
-  );
-};
+  )
+}
 
-export default Tabs;
+export default Tabs

@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react'
 
 const Tab = props => {
-  const { label, activeTab } = props;
+  const { label, activeTab } = props
 
   let onClick = event => {
-    const { label, onClick } = props;
-    onClick(label, event.target);
-  };
+    const { label, onClick } = props
+    onClick(label, event.target)
+  }
 
-  let isActive = activeTab === label && "tab-list-active";
+  let isActive = activeTab === label && 'tab-list-active'
 
   return (
     <li className="tab-list-item">
@@ -29,7 +29,7 @@ const Tab = props => {
         `}
       </style>
     </li>
-  );
-};
+  )
+}
 
-export default Tab;
+export default Tab
