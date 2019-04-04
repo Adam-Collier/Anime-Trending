@@ -7,12 +7,16 @@ import AnimeContent from "../components/AnimeContent";
 import Tabs from "../components/Tabs";
 import EpisodeList from "../components/EpisodeList";
 import CharacterList from "../components/CharacterList";
+import FeaturedReview from "../components/FeaturedReview";
 
-const Post = ({ header, episodes, characters }) => {
+const Post = ({ header, episodes, characters, review }) => {
   return (
     <Layout>
       <AnimeContent>
         <AnimeHeader data={header} />
+        <div className="utilities">
+          <FeaturedReview data={review} />
+        </div>
         <Tabs>
           <div label="Episodes">
             <EpisodeList data={episodes} />
@@ -22,11 +26,19 @@ const Post = ({ header, episodes, characters }) => {
           </div>
         </Tabs>
       </AnimeContent>
+      <style jsx>{`
+        .utilities {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-column: 3/4;
+          grid-row: 4/5;
+        }
+      `}</style>
     </Layout>
   );
 };
 
-Post.getInitialProps = async function (context) {
+Post.getInitialProps = async function(context) {
   const { id } = context.query;
 
   async function getTrendingHeader() {
@@ -63,10 +75,23 @@ Post.getInitialProps = async function (context) {
     }
   }
 
+  async function getFeaturedReview() {
+    try {
+      let data = axios.get(
+        `https://kitsu.io/api/edge/reviews?filter[mediaId]=${id}&sort=likesCount&page[limit]=1`
+      );
+      let review = await data;
+      return review.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     header: await getTrendingHeader(),
     episodes: await getEpisodeList(),
-    characters: await getCharacterList()
+    characters: await getCharacterList(),
+    review: await getFeaturedReview()
   };
 };
 
