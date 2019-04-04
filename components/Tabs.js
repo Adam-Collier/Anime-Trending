@@ -6,7 +6,7 @@ const Tabs = props => {
   let { children } = props;
 
   // Declare a new state variable, which we'll call "count"
-  const tabLabel = children[0].props.label
+  const tabLabel = children[0].props.label;
   const [activeTab, setActiveTab] = useState(tabLabel);
 
   const underline = useRef(null);
@@ -45,7 +45,7 @@ const Tabs = props => {
       <style jsx>
         {`
           .tabs {
-            grid-row: 4/5;
+            grid-row: 5/6;
             grid-column: 3/4;
             background: #19191f;
             border-radius: 5px 5px 0 0;
