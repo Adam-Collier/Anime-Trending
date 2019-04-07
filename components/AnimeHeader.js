@@ -16,24 +16,17 @@ const animeHeader = props => {
         </Link>
       </Fragment>
     ) : (
-        children
-      );
+      children
+    );
   };
 
   let stickyCover = props.router.pathname === "/" ? "relative" : "sticky";
-  const fallback = `/static/default-cover.jpg`
+  const fallback = `/static/default-cover.jpg`;
 
   return (
     <Fragment>
       <div className="banner">
-        <img
-          src={
-            data.coverImage
-              ? data.coverImage.small
-              : fallback
-          }
-          alt=""
-        />
+        <img src={data.coverImage ? data.coverImage.small : fallback} alt="" />
       </div>
       <div className="cover">
         <ConditionalLink>
@@ -88,7 +81,7 @@ const animeHeader = props => {
             width: 25%;
             width: 210px;
             grid-column: 2/3;
-            grid-row: 2/5;
+            grid-row: 2/6;
           }
           .cover img {
             width: 100%;
