@@ -85,7 +85,7 @@ const Tabs = props => {
           }
           @media (max-width: 768px) {
             .tabs {
-              grid-row: 4/5;
+              grid-row: 5/6;
               grid-column: 1/5;
               margin-top: 40px;
             }

@@ -33,6 +33,12 @@ const Post = ({ header, episodes, characters, reviews }) => {
           grid-column: 3/4;
           grid-row: 4/5;
         }
+        @media (max-width: 767px) {
+          .utilities {
+            grid-template-rows: auto auto;
+            grid-column: 2/4;
+          }
+        }
       `}</style>
     </Layout>
   );
