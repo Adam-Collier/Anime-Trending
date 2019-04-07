@@ -1,25 +1,74 @@
-import React from "react";
+const FeaturedReview = ({ data }) => {
+  let featuredReview = data.reviews[0];
+  console.log(featuredReview);
+  let review = featuredReview.content;
+  review = review.substr(0, review.lastIndexOf(" ", 250));
+  let rating = featuredReview.reviewer.scores.overall * 10;
+  let username = featuredReview.reviewer.username;
+  let avatar = featuredReview.reviewer.image_url;
 
-function FeaturedReview({ data }) {
-  console.log(data);
-  let review = data.data[0].attributes;
-  console.log(review);
   return (
-    <div>
+    <div className="featuredRating">
       <h3>Featured Review</h3>
-      <p>{review.content}</p>
+      <div className="user">
+        <div className="rating">
+          <div className="stars">
+            <span>★</span>
+            <span>★</span>
+            <span>★</span>
+            <span>★</span>
+            <span>★</span>
+          </div>
+        </div>
+        <div className="profile">
+          <p>{username}</p>
+          <img src={avatar} alt="" />
+        </div>
+      </div>
+
+      <p>{review}...</p>
       <style jsx>
         {`
-          div {
+          .featuredRating {
             padding: 0px 20px;
             background: #19191f;
             border-radius: 5px;
             grid-column: 2/3;
           }
+          .user {
+            display: flex;
+            justify-content: space-between;
+          }
+          .rating {
+            display: inline-block;
+            position: relative;
+            color: #ffffff;
+          }
+          .stars {
+            --rating-width: 0%;
+            overflow: hidden;
+            width: ${rating}%;
+          }
+          span {
+            padding: 0 1px;
+          }
+          .profile {
+            display: flex;
+          }
+          .profile p {
+            margin: 0;
+            color: #ccc;
+          }
+          img {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-left: 10px;
+          }
         `}
       </style>
     </div>
   );
-}
+};
 
 export default FeaturedReview;

@@ -9,13 +9,13 @@ import EpisodeList from "../components/EpisodeList";
 import CharacterList from "../components/CharacterList";
 import FeaturedReview from "../components/FeaturedReview";
 
-const Post = ({ header, episodes, characters, review }) => {
+const Post = ({ header, episodes, characters, reviews }) => {
   return (
     <Layout>
       <AnimeContent>
         <AnimeHeader data={header} />
         <div className="utilities">
-          <FeaturedReview data={review} />
+          <FeaturedReview data={reviews} />
         </div>
         <Tabs>
           <div label="Episodes">
@@ -75,13 +75,18 @@ Post.getInitialProps = async function(context) {
     }
   }
 
-  async function getFeaturedReview() {
+  async function getReviews() {
     try {
       let data = axios.get(
-        `https://kitsu.io/api/edge/reviews?filter[mediaId]=${id}&sort=likesCount&page[limit]=1`
+        `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
       );
-      let review = await data;
-      return review.data;
+      let { data: mapping } = await data;
+      let malId = mapping.data[0].attributes.externalId;
+      let reviewData = axios.get(
+        `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
+      );
+      let reviews = await reviewData;
+      return reviews.data;
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +96,7 @@ Post.getInitialProps = async function(context) {
     header: await getTrendingHeader(),
     episodes: await getEpisodeList(),
     characters: await getCharacterList(),
-    review: await getFeaturedReview()
+    reviews: await getReviews()
   };
 };
 
