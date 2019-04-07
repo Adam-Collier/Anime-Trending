@@ -1,6 +1,5 @@
 const FeaturedReview = ({ data }) => {
   let featuredReview = data.reviews[0];
-  console.log(featuredReview);
   let review = featuredReview.content;
   review = review.substr(0, review.lastIndexOf(" ", 250));
   let rating = featuredReview.reviewer.scores.overall * 10;
