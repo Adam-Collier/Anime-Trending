@@ -7,12 +7,16 @@ import AnimeContent from '../components/AnimeContent'
 import Tabs from '../components/Tabs'
 import EpisodeList from '../components/EpisodeList'
 import CharacterList from '../components/CharacterList'
+import FeaturedReview from '../components/FeaturedReview'
 
-const Post = ({ header, episodes, characters }) => {
+const Post = ({ header, episodes, characters, reviews }) => {
   return (
     <Layout>
       <AnimeContent>
         <AnimeHeader data={header} />
+        <div className="utilities">
+          <FeaturedReview data={reviews} />
+        </div>
         <Tabs>
           <div label="Episodes">
             <EpisodeList data={episodes} />
@@ -22,6 +26,20 @@ const Post = ({ header, episodes, characters }) => {
           </div>
         </Tabs>
       </AnimeContent>
+      <style jsx>{`
+        .utilities {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-column: 3/4;
+          grid-row: 4/5;
+        }
+        @media (max-width: 767px) {
+          .utilities {
+            grid-template-rows: auto auto;
+            grid-column: 2/4;
+          }
+        }
+      `}</style>
     </Layout>
   )
 }
@@ -63,10 +81,28 @@ Post.getInitialProps = async function(context) {
     }
   }
 
+  async function getReviews() {
+    try {
+      let data = axios.get(
+        `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
+      )
+      let { data: mapping } = await data
+      let malId = mapping.data[0].attributes.externalId
+      let reviewData = axios.get(
+        `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
+      )
+      let reviews = await reviewData
+      return reviews.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     header: await getTrendingHeader(),
     episodes: await getEpisodeList(),
     characters: await getCharacterList(),
+    reviews: await getReviews(),
   }
 }
 

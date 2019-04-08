@@ -45,7 +45,7 @@ const Tabs = props => {
       <style jsx>
         {`
           .tabs {
-            grid-row: 4/5;
+            grid-row: 5/6;
             grid-column: 3/4;
             background: #19191f;
             border-radius: 5px 5px 0 0;
@@ -85,7 +85,7 @@ const Tabs = props => {
           }
           @media (max-width: 768px) {
             .tabs {
-              grid-row: 4/5;
+              grid-row: 5/6;
               grid-column: 1/5;
               margin-top: 40px;
             }
