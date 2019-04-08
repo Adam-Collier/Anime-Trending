@@ -10,6 +10,7 @@ app
   .prepare()
   .then(() => {
     const server = express()
+    server.use(compression())
     const interfaces = os.networkInterfaces()
 
     server.get('/anime/:id', (req, res) => {
