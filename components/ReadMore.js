@@ -1,15 +1,15 @@
-import react, { Fragment, useState } from "react";
+import react, { Fragment, useState } from 'react'
 
 const ReadMore = props => {
-  const [toggleState, setToggleState] = useState(true);
+  const [toggleState, setToggleState] = useState(true)
 
   function toggle() {
-    setToggleState(toggleState === true ? false : true);
+    setToggleState(toggleState === true ? false : true)
   }
 
   return (
     <Fragment>
-      <p className={`description ${toggleState ? "" : "expand"}`}>
+      <p className={`description ${toggleState ? '' : 'expand'}`}>
         {props.data}
       </p>
       <p onClick={toggle}>{toggleState ? `read more` : `read less`}</p>
@@ -21,11 +21,11 @@ const ReadMore = props => {
         }
         .description {
           position: relative;
-          height: ${props.height ? props.height : "118px"};
+          height: ${props.height ? props.height : '118px'};
           overflow: hidden;
         }
         .description:after {
-          content: "";
+          content: '';
           position: absolute;
           bottom: 0;
           left: 0;
@@ -53,7 +53,7 @@ const ReadMore = props => {
         }
       `}</style>
     </Fragment>
-  );
-};
+  )
+}
 
-export default ReadMore;
+export default ReadMore

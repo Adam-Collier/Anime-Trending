@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
-import { withRouter } from "next/router";
-import ReadMore from "./ReadMore";
-import Link from "next/link";
+import React, { Fragment } from 'react'
+import { withRouter } from 'next/router'
+import ReadMore from './ReadMore'
+import Link from 'next/link'
 
 const animeHeader = props => {
-  let { attributes: data } = props.data;
+  let { attributes: data } = props.data
 
   let ConditionalLink = ({ children }) => {
-    return props.router.pathname === "/" ? (
+    return props.router.pathname === '/' ? (
       <Fragment>
         <Link as={`/anime/${props.data.id}`} href={`/post?id=${props.data.id}`}>
           <a aria-label="Read more about the biggest trending anime">
@@ -17,11 +17,11 @@ const animeHeader = props => {
       </Fragment>
     ) : (
       children
-    );
-  };
+    )
+  }
 
-  let stickyCover = props.router.pathname === "/" ? "relative" : "sticky";
-  const fallback = `/static/default-cover.jpg`;
+  let stickyCover = props.router.pathname === '/' ? 'relative' : 'sticky'
+  const fallback = `/static/default-cover.jpg`
 
   return (
     <Fragment>
@@ -34,7 +34,7 @@ const animeHeader = props => {
         </ConditionalLink>
       </div>
       <div className="titles">
-        {props.router.pathname === "/" ? <h3>#1 in Trending</h3> : null}
+        {props.router.pathname === '/' ? <h3>#1 in Trending</h3> : null}
         <ConditionalLink>
           <Fragment>
             <h1>{data.titles.en}</h1>
@@ -54,7 +54,7 @@ const animeHeader = props => {
             z-index: -1;
           }
           .banner:after {
-            content: "";
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -162,7 +162,7 @@ const animeHeader = props => {
         `}
       </style>
     </Fragment>
-  );
-};
+  )
+}
 
-export default withRouter(animeHeader);
+export default withRouter(animeHeader)

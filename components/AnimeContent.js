@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const AnimeContent = ({ children }) => {
   return (
@@ -22,7 +22,7 @@ const AnimeContent = ({ children }) => {
         `}
       </style>
     </div>
-  );
-};
+  )
+}
 
-export default AnimeContent;
+export default AnimeContent

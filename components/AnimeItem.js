@@ -1,11 +1,14 @@
-import Link from "next/link"
+import Link from 'next/link'
 
 const AnimeItem = ({ anime }) => {
   return (
     <div className="anime">
       <Link as={`/anime/${anime.id}`} href={`/post?id=${anime.id}`}>
         <a>
-          <img src={anime.attributes.posterImage.small} alt={anime.attributes.canonicalTitle} />
+          <img
+            src={anime.attributes.posterImage.small}
+            alt={anime.attributes.canonicalTitle}
+          />
         </a>
       </Link>
       <style jsx>{`

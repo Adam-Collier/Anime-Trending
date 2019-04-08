@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios')
 
 module.exports = {
   async exportPathMap() {
@@ -8,8 +8,8 @@ module.exports = {
       action: 150,
       fantasy: 156,
       thriller: 159,
-      adventure: 157
-    };
+      adventure: 157,
+    }
 
     let promiseArray = Object.keys(obj).map(x =>
       axios
@@ -19,26 +19,26 @@ module.exports = {
           }`
         )
         .then(res => res.data.data)
-    );
+    )
 
-    let data = await Promise.all(promiseArray);
-    let animeIds = [].concat(...data).map(x => x.id);
+    let data = await Promise.all(promiseArray)
+    let animeIds = [].concat(...data).map(x => x.id)
 
     // tranform the list of posts into a map of pages with the pathname `/post/:id`
     const pages = animeIds.reduce(
       (pages, id) =>
         Object.assign({}, pages, {
           [`/anime/${id}`]: {
-            page: "/post",
-            query: { id: id }
-          }
+            page: '/post',
+            query: { id: id },
+          },
         }),
       {}
-    );
+    )
 
     // combine the map of post pages with the home
     return Object.assign({}, pages, {
-      "/": { page: "/" }
-    });
-  }
-};
+      '/': { page: '/' },
+    })
+  },
+}
