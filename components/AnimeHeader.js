@@ -130,6 +130,7 @@ const animeHeader = props => {
           .read-more {
             grid-column: 3/4;
             grid-row: 3/4;
+            margin-bottom: 30px;
           }
           @media (min-width: 768px) {
             h1 {
