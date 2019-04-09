@@ -8,13 +8,15 @@ import Tabs from '../components/Tabs'
 import EpisodeList from '../components/EpisodeList'
 import CharacterList from '../components/CharacterList'
 import FeaturedReview from '../components/FeaturedReview'
+import Stats from '../components/Stats'
 
-const Post = ({ header, episodes, characters, reviews }) => {
+const Post = ({ header, episodes, characters, reviews, stats }) => {
   return (
     <Layout>
       <AnimeContent>
         <AnimeHeader data={header} />
         <div className="utilities">
+          <Stats data={stats} />
           <FeaturedReview data={reviews} />
         </div>
         <Tabs>
@@ -29,9 +31,10 @@ const Post = ({ header, episodes, characters, reviews }) => {
       <style jsx>{`
         .utilities {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1.2fr;
           grid-column: 3/4;
           grid-row: 4/5;
+          grid-gap: 15px;
         }
         @media (max-width: 767px) {
           .utilities {
@@ -98,11 +101,27 @@ Post.getInitialProps = async function(context) {
     }
   }
 
+  async function getStats() {
+    try {
+      let data = axios.get(
+        `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
+      )
+      let { data: mapping } = await data
+      let malId = mapping.data[0].attributes.externalId
+      let statData = axios.get(`https://api.jikan.moe/v3/anime/${malId}/stats`)
+      let stats = await statData
+      return stats.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     header: await getTrendingHeader(),
     episodes: await getEpisodeList(),
     characters: await getCharacterList(),
     reviews: await getReviews(),
+    stats: await getStats(),
   }
 }
 
