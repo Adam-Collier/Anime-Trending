@@ -1,10 +1,10 @@
 const FeaturedReview = ({ data }) => {
-  let featuredReview = data.reviews[0];
-  let review = featuredReview.content;
-  review = review.substr(0, review.lastIndexOf(" ", 250));
-  let rating = featuredReview.reviewer.scores.overall * 10;
-  let username = featuredReview.reviewer.username;
-  let avatar = featuredReview.reviewer.image_url;
+  let featuredReview = data.reviews[0]
+  let review = featuredReview.content
+  review = review.substr(0, review.lastIndexOf(' ', 240))
+  let rating = featuredReview.reviewer.scores.overall * 10
+  let username = featuredReview.reviewer.username
+  let avatar = featuredReview.reviewer.image_url
 
   return (
     <div className="featuredRating">
@@ -76,7 +76,7 @@ const FeaturedReview = ({ data }) => {
         `}
       </style>
     </div>
-  );
-};
+  )
+}
 
-export default FeaturedReview;
+export default FeaturedReview
