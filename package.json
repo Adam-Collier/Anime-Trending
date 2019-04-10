@@ -14,7 +14,8 @@
     "serve": "NODE_ENV=production node server.js",
     "serve-dev": "node server.js",
     "export": "next export",
-    "out": "serve out"
+    "out": "serve out",
+    "cypress": "cypress open"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
     "shortid": "^2.2.14"
   },
   "devDependencies": {
+    "cypress": "^3.2.0",
     "serve": "^10.1.2"
   }
 }
