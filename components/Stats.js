@@ -1,8 +1,6 @@
 import React from 'react'
 
 const Stats = ({ data }) => {
-  console.log(data)
-
   let scores = Object.values(data.scores)
   let weight = 0
   let sum = 0
