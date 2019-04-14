@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "animebeast",
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@now/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/anime/(?<id>[^/]+)$",
+      "dest": "/post?id=$id",
+      "headers": {
+        "cache-control": "immutable"
+      }
+    }
+  ]
+}
