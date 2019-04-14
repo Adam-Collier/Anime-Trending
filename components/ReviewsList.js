@@ -15,7 +15,6 @@ const ReviewsList = ({ data }) => {
           <HorizontalRule />
         </div>
       ))}
-      )
       <style jsx>
         {`
           .review {
