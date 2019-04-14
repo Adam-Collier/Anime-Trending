@@ -22,7 +22,9 @@ const Tabs = props => {
   return (
     <div className="tabs">
       <ol className="tab-list">
-        <div className="underline" ref={underline} />
+        <li>
+          <div className="underline" ref={underline} />
+        </li>
         {children.map(child => {
           const key = shortid.generate()
           const { label } = child.props
@@ -71,6 +73,9 @@ const Tabs = props => {
             top: -10px;
             height: 10px;
             background: #1f202c;
+          }
+          li {
+            list-style-type: none;
           }
           .underline {
             --left-position: 16px;
