@@ -2,10 +2,19 @@ const express = require('express')
 const next = require('next')
 const os = require('os')
 const compression = require('compression')
+const cacheableResponse = require('cacheable-response')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+
+const ssrCache = cacheableResponse({
+  ttl: 1000 * 60 * 60, // 1hour
+  get: async ({ req, res, actualPage, queryParams }) => ({
+    data: await app.renderToHTML(req, res, actualPage, queryParams),
+  }),
+  send: ({ data, res }) => res.send(data),
+})
 
 app
   .prepare()
@@ -14,10 +23,13 @@ app
     server.use(compression())
     const interfaces = os.networkInterfaces()
 
+    // server.get('/', (req, res) => ssrCache({ req, res, pagePath: '/' }))
+
     server.get('/anime/:id', (req, res) => {
       const actualPage = '/post'
       const queryParams = { id: req.params.id }
-      app.render(req, res, actualPage, queryParams)
+      // app.render(req, res, actualPage, queryParams)
+      return ssrCache({ req, res, actualPage, queryParams })
     })
 
     server.get('*', (req, res) => {
