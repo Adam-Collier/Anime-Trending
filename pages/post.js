@@ -67,7 +67,7 @@ Post.getInitialProps = async function(context) {
   async function getEpisodeList() {
     try {
       let data = axios.get(
-        `https://kitsu.io/api/edge/episodes?filter%5BmediaType%5D=Anime&filter%5Bmedia_id%5D=${id}&sort=number&page[limit]=20`
+        `https://kitsu.io/api/edge/episodes?filter[mediaType]=Anime&filter[media_id]=${id}&sort=number&page[limit]=20`
       )
       let episodeList = await data
       return episodeList.data.data
@@ -88,13 +88,14 @@ Post.getInitialProps = async function(context) {
     }
   }
 
+  let data = axios.get(
+    `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
+  )
+  let { data: mapping } = await data
+  let malId = mapping.data[0].attributes.externalId
+
   async function getReviews() {
     try {
-      let data = axios.get(
-        `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
-      )
-      let { data: mapping } = await data
-      let malId = mapping.data[0].attributes.externalId
       let reviewData = axios.get(
         `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
       )
@@ -107,11 +108,6 @@ Post.getInitialProps = async function(context) {
 
   async function getStats() {
     try {
-      let data = axios.get(
-        `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
-      )
-      let { data: mapping } = await data
-      let malId = mapping.data[0].attributes.externalId
       let statData = axios.get(`https://api.jikan.moe/v3/anime/${malId}/stats`)
       let stats = await statData
       return stats.data
@@ -120,12 +116,26 @@ Post.getInitialProps = async function(context) {
     }
   }
 
+  const [
+    trendingHeader,
+    episodeList,
+    characterList,
+    reviews,
+    stats,
+  ] = await Promise.all([
+    getTrendingHeader(),
+    getEpisodeList(),
+    getCharacterList(),
+    getReviews(),
+    getStats(),
+  ])
+
   return {
-    header: await getTrendingHeader(),
-    episodes: await getEpisodeList(),
-    characters: await getCharacterList(),
-    reviews: await getReviews(),
-    stats: await getStats(),
+    header: trendingHeader,
+    episodes: episodeList,
+    characters: characterList,
+    reviews: reviews,
+    stats: stats,
   }
 }
 
