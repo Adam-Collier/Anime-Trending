@@ -7,6 +7,7 @@ import AnimeContent from '../components/AnimeContent'
 import Tabs from '../components/Tabs'
 import EpisodeList from '../components/EpisodeList'
 import CharacterList from '../components/CharacterList'
+import ReviewList from '../components/ReviewsList'
 import FeaturedReview from '../components/FeaturedReview'
 import Stats from '../components/Stats'
 
@@ -25,6 +26,9 @@ const Post = ({ header, episodes, characters, reviews, stats }) => {
           </div>
           <div label="Characters">
             <CharacterList data={characters} />
+          </div>
+          <div label="Reviews">
+            <ReviewList data={reviews} />
           </div>
         </Tabs>
       </AnimeContent>
