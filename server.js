@@ -23,7 +23,7 @@ app
     server.use(compression())
     const interfaces = os.networkInterfaces()
 
-    // server.get('/', (req, res) => ssrCache({ req, res, pagePath: '/' }))
+    server.get('/', (req, res) => ssrCache({ req, res, actualPage: '/' }))
 
     server.get('/anime/:id', (req, res) => {
       const actualPage = '/post'
