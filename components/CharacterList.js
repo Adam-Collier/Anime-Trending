@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import shortid from 'shortid'
+import HorizontalRule from '../components/HorizontalRule'
 
 import ReadMore from './ReadMore'
 
@@ -25,6 +26,7 @@ const CharacterList = ({ data }) => (
                 height="92px"
               />
             </div>
+            <HorizontalRule />
           </div>
         )
       })
@@ -36,10 +38,11 @@ const CharacterList = ({ data }) => (
     <style jsx>
       {`
         .character {
+          position: relative;
           display: grid;
           grid-template-columns: 18px 120px auto 18px;
           grid-gap: 15px;
-          padding-bottom: 40px;
+          margin-bottom: 50px;
         }
         .character > p {
           margin-top: 20px;

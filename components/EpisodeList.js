@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import HorizontalRule from '../components/HorizontalRule'
 
 const EpisodeList = ({ data }) => (
   <Fragment>
@@ -14,15 +15,18 @@ const EpisodeList = ({ data }) => (
             ? episode.attributes.synopsis
             : 'No description found...'}
         </p>
+        <HorizontalRule />
       </div>
     ))}
+
     <style jsx>
       {`
         .episode {
+          position: relative;
           display: grid;
           grid-template-columns: 60px 2fr 5fr;
           grid-template-rows: auto;
-          min-height: 150px;
+          margin-bottom: 50px;
         }
         .titles {
           grid-column: 2/3;
