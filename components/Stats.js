@@ -1,4 +1,5 @@
 import React from 'react'
+import shortid from 'shortid'
 
 const Stats = ({ data }) => {
   let scores = Object.values(data.scores)
@@ -30,7 +31,7 @@ const Stats = ({ data }) => {
           1<span className="left">★</span>
         </div>
         {arr.map(x => (
-          <span style={{ height: x + '%' }} />
+          <span key={shortid.generate()} style={{ height: x + '%' }} />
         ))}
         <div>
           5<span className="right">★</span>

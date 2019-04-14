@@ -2,19 +2,20 @@ import UserRating from '../components/UserRating'
 import React, { Fragment } from 'react'
 import ReadMore from '../components/ReadMore'
 import HorizontalRule from '../components/HorizontalRule'
+import shortid from 'shortid'
 
 const ReviewsList = ({ data }) => {
   let reviews = data.reviews
-  console.log(data)
   return (
     <div>
       {reviews.map(x => (
-        <div className="review">
+        <div className="review" key={shortid.generate()}>
           <UserRating review={x} />
           <ReadMore data={x.content} />
           <HorizontalRule />
         </div>
       ))}
+      )
       <style jsx>
         {`
           .review {

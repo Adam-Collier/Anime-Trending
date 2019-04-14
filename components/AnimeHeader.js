@@ -26,7 +26,7 @@ const animeHeader = props => {
   return (
     <Fragment>
       <div className="banner">
-        <img src={data.coverImage ? data.coverImage.small : fallback} alt="" />
+        <img src={data.coverImage ? data.coverImage.large : fallback} alt="" />
       </div>
       <div className="cover">
         <ConditionalLink>
