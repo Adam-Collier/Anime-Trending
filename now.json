@@ -9,10 +9,16 @@
   ],
   "routes": [
     {
+      "src": "/index",
+      "headers": {
+        "cache-control": "s-maxage=3600, max=0"
+      }
+    },
+    {
       "src": "/anime/(?<id>[^/]+)$",
       "dest": "/post?id=$id",
       "headers": {
-        "cache-control": "immutable"
+        "cache-control": "s-maxage=3600, max=0"
       }
     }
   ]
