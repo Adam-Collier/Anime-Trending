@@ -9,10 +9,16 @@ const ReadMore = props => {
 
   return (
     <Fragment>
-      <p className={`description ${toggleState ? '' : 'expand'}`}>
-        {props.data}
-      </p>
-      <p onClick={toggle}>{toggleState ? `read more` : `read less`}</p>
+      {props.data.length < 400 ? (
+        <p>{props.data}</p>
+      ) : (
+        <Fragment>
+          <p className={`description ${toggleState ? '' : 'expand'}`}>
+            {props.data}
+          </p>
+          <p onClick={toggle}>{toggleState ? `read more` : `read less`}</p>
+        </Fragment>
+      )}
       <style jsx>{`
         p {
           color: #ffffff;
