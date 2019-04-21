@@ -6,10 +6,10 @@ const ReadMore = props => {
   function toggle() {
     setToggleState(toggleState === true ? false : true)
   }
-
+  console.log(props.data.length)
   return (
     <Fragment>
-      {props.data.length < 400 ? (
+      {props.data.length < props.max ? (
         <p>{props.data}</p>
       ) : (
         <Fragment>
