@@ -22,6 +22,14 @@ const ReviewsList = ({ data }) => {
             position: relative;
             padding: 0 40px;
           }
+          :global(.description:after) {
+            grid-column: 3/4;
+            --gradient-background: linear-gradient(
+              to top,
+              rgba(25, 25, 31, 0.8) 10%,
+              rgba(25, 25, 31, 0)
+            );
+          }
           @media (max-width: 768px) {
             .review {
               padding: 0 15px;

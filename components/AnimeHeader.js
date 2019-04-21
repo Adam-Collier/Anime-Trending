@@ -43,7 +43,7 @@ const animeHeader = props => {
         </ConditionalLink>
       </div>
       <div className="read-more">
-        <ReadMore data={data.synopsis} />
+        <ReadMore data={data.synopsis} max={400} />
       </div>
       <style jsx>
         {`

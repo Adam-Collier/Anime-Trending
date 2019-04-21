@@ -24,6 +24,7 @@ const CharacterList = ({ data }) => (
               <ReadMore
                 data={ReactHtmlParser(character.attributes.description)}
                 height="92px"
+                max={3}
               />
             </div>
             <HorizontalRule />
