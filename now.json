@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "animebeast",
   "builds": [
     {
       "src": "next.config.js",
@@ -18,8 +17,10 @@
       "src": "/anime/(?<id>[^/]+)$",
       "dest": "/post?id=$id",
       "headers": {
-        "cache-control": "s-maxage=3600, max=0"
+        "cache-control": "s-maxage=86400, max=0"
       }
     }
-  ]
+  ],
+  "regions": ["lhr"],
+  "public": false
 }

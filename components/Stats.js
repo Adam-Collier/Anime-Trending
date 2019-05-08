@@ -1,42 +1,48 @@
-import React from 'react'
+import { Fragment } from 'react'
 import shortid from 'shortid'
 
 const Stats = ({ data }) => {
-  let scores = Object.values(data.scores)
-  let weight = 0
-  let sum = 0
+  let arr = [],
+    average
+  if (data) {
+    let scores = Object.values(data.scores)
+    let weight = 0
+    let sum = 0
 
-  let percentage = 0
-  let arr = []
-  scores.forEach((x, i) => {
-    percentage += x.percentage
-    if (i % 2) {
-      arr.push(percentage)
-      percentage = 0
-    }
-    weight += x.votes * i + 1
-    sum += x.votes
-  })
+    let percentage = 0
 
-  let average = weight / sum / 2
+    scores.forEach((x, i) => {
+      percentage += x.percentage
+      if (i % 2) {
+        arr.push(percentage)
+        percentage = 0
+      }
+      weight += x.votes * i + 1
+      sum += x.votes
+    })
+
+    average = weight / sum / 2
+  }
 
   return (
     <div className="stats">
-      <h3>Ratings</h3>
-      <h1>
-        {average.toFixed(1)} <span>out of 5</span>
-      </h1>
-      <div className="grid">
-        <div>
-          1<span className="left">★</span>
+      <Fragment>
+        <h3>Ratings</h3>
+        <h1>
+          {average.toFixed(1)} <span>out of 5</span>
+        </h1>
+        <div className="grid">
+          <div>
+            1<span className="left">★</span>
+          </div>
+          {arr.map(x => (
+            <span key={shortid.generate()} style={{ height: x + '%' }} />
+          ))}
+          <div>
+            5<span className="right">★</span>
+          </div>
         </div>
-        {arr.map(x => (
-          <span key={shortid.generate()} style={{ height: x + '%' }} />
-        ))}
-        <div>
-          5<span className="right">★</span>
-        </div>
-      </div>
+      </Fragment>
       <style jsx>
         {`
           .stats {

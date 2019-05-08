@@ -10,6 +10,7 @@ import CharacterList from '../components/CharacterList'
 import ReviewList from '../components/ReviewsList'
 import FeaturedReview from '../components/FeaturedReview'
 import Stats from '../components/Stats'
+import DefaultReviewStat from '../components/DefaultReviewStat'
 
 const Post = ({ header, episodes, characters, reviews, stats }) => {
   return (
@@ -17,8 +18,16 @@ const Post = ({ header, episodes, characters, reviews, stats }) => {
       <AnimeContent>
         <AnimeHeader data={header} />
         <div className="utilities">
-          <Stats data={stats} />
-          <FeaturedReview data={reviews} />
+          {stats ? (
+            <Stats data={stats} />
+          ) : (
+            <DefaultReviewStat component="stats" />
+          )}
+          {reviews ? (
+            <FeaturedReview data={reviews} />
+          ) : (
+            <DefaultReviewStat component="review" />
+          )}
         </div>
         <Tabs>
           <div label="Episodes">
@@ -54,6 +63,12 @@ const Post = ({ header, episodes, characters, reviews, stats }) => {
 Post.getInitialProps = async function(context) {
   const { id } = context.query
 
+  let data = await axios.get(
+    `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
+  )
+  let { data: mapping } = await data
+  let malId = await mapping.data[0].attributes.externalId
+
   async function getTrendingHeader() {
     try {
       let trendingData = axios.get(`https://kitsu.io/api/edge/anime/${id}`)
@@ -88,12 +103,6 @@ Post.getInitialProps = async function(context) {
     }
   }
 
-  let data = axios.get(
-    `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
-  )
-  let { data: mapping } = await data
-  let malId = mapping.data[0].attributes.externalId
-
   async function getReviews() {
     try {
       let reviewData = axios.get(
@@ -116,19 +125,41 @@ Post.getInitialProps = async function(context) {
     }
   }
 
-  const [
-    trendingHeader,
-    episodeList,
-    characterList,
-    reviews,
-    stats,
-  ] = await Promise.all([
+  let promises = [
     getTrendingHeader(),
     getEpisodeList(),
     getCharacterList(),
     getReviews(),
     getStats(),
-  ])
+  ]
+
+  const results = await Promise.all(promises.map(p => p.catch(e => e)))
+
+  const validResults = results.map(result =>
+    result instanceof Error ? {} : result
+  )
+
+  let [
+    trendingHeader,
+    episodeList,
+    characterList,
+    reviews,
+    stats,
+  ] = validResults
+
+  // const [
+  //   trendingHeader,
+  //   episodeList,
+  //   characterList,
+  //   reviews,
+  //   stats,
+  // ] = await Promise.all([
+  //   getTrendingHeader().catch(e => e),
+  //   getEpisodeList().catch(e => e),
+  //   getCharacterList().catch(e => e),
+  //   getReviews().catch(e => e),
+  //   getStats().catch(e => e),
+  // ])
 
   return {
     header: trendingHeader,
