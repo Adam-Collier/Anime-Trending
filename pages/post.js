@@ -134,7 +134,6 @@ Post.getInitialProps = async function(context) {
   ]
 
   const results = await Promise.all(promises.map(p => p.catch(e => e)))
-  console.log('the results', results)
 
   const validResults = results.map(result =>
     result instanceof Error ? {} : result

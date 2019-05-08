@@ -2,7 +2,6 @@ import { Fragment } from 'react'
 import shortid from 'shortid'
 
 const Stats = ({ data }) => {
-  console.log(data)
   let arr = [],
     average
   if (data) {
@@ -27,28 +26,23 @@ const Stats = ({ data }) => {
 
   return (
     <div className="stats">
-      {data ? (
-        <Fragment>
-          <h3>Ratings</h3>
-          <h1>
-            {average.toFixed(1)} <span>out of 5</span>
-          </h1>
-          <div className="grid">
-            <div>
-              1<span className="left">★</span>
-            </div>
-            {arr.map(x => (
-              <span key={shortid.generate()} style={{ height: x + '%' }} />
-            ))}
-            <div>
-              5<span className="right">★</span>
-            </div>
+      <Fragment>
+        <h3>Ratings</h3>
+        <h1>
+          {average.toFixed(1)} <span>out of 5</span>
+        </h1>
+        <div className="grid">
+          <div>
+            1<span className="left">★</span>
           </div>
-        </Fragment>
-      ) : (
-        <p>sorry no scores available</p>
-      )}
-
+          {arr.map(x => (
+            <span key={shortid.generate()} style={{ height: x + '%' }} />
+          ))}
+          <div>
+            5<span className="right">★</span>
+          </div>
+        </div>
+      </Fragment>
       <style jsx>
         {`
           .stats {

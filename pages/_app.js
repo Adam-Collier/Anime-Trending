@@ -7,7 +7,6 @@ import withApolloClient from '../lib/with-apollo-client'
 NProgress.configure({ showSpinner: false })
 
 Router.events.on('routeChangeStart', url => {
-  console.log(`Loading: ${url}`)
   NProgress.start()
 })
 Router.events.on('routeChangeComplete', () => NProgress.done())

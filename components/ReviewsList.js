@@ -8,17 +8,13 @@ const ReviewsList = ({ data }) => {
   let reviews = data.reviews
   return (
     <div>
-      {reviews ? (
-        reviews.map(x => (
-          <div className="review" key={shortid.generate()}>
-            <UserRating review={x} />
-            <ReadMore data={x.content} />
-            <HorizontalRule />
-          </div>
-        ))
-      ) : (
-        <p>sorry no data available</p>
-      )}
+      {reviews.map(x => (
+        <div className="review" key={shortid.generate()}>
+          <UserRating review={x} />
+          <ReadMore data={x.content} />
+          <HorizontalRule />
+        </div>
+      ))}
       <style jsx>
         {`
           .review {
