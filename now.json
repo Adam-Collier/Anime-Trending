@@ -1,26 +1,3 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "next.config.js",
-      "use": "@now/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/index",
-      "headers": {
-        "cache-control": "s-maxage=3600, max=0"
-      }
-    },
-    {
-      "src": "/anime/(?<id>[^/]+)$",
-      "dest": "/post?id=$id",
-      "headers": {
-        "cache-control": "s-maxage=86400, max=0"
-      }
-    }
-  ],
-  "regions": ["lhr"],
-  "public": false
+  "version": 1
 }

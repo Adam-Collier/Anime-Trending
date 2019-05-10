@@ -3,9 +3,11 @@ const next = require('next')
 const os = require('os')
 const compression = require('compression')
 const cacheableResponse = require('cacheable-response')
+const { join } = require('path')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
+
 const handle = app.getRequestHandler()
 
 app
@@ -14,6 +16,8 @@ app
     const server = express()
     server.use(compression())
     const interfaces = os.networkInterfaces()
+
+    server.get('/service-worker.js', ServiceWorker(app));
 
     server.get('/anime/:id', (req, res) => {
       const actualPage = '/post'
@@ -46,3 +50,9 @@ app
     console.error(ex.stack)
     process.exit(1)
   })
+
+const ServiceWorker = app => (req, res) => {
+  const filePath = join(__dirname, '.next', '/static/service-worker.js');
+
+  app.serveStatic(req, res, filePath);
+};

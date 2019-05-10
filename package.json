@@ -10,13 +10,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "serve": "NODE_ENV=production node server.js",
-    "serve-dev": "node server.js",
-    "export": "next export",
-    "out": "serve out",
-    "deploy": "now",
-    "now-build": "next build"
+    "start": "NODE_ENV=production node server.js",
+    "serve-dev": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +26,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "lru-cache": "^5.1.1",
     "next": "^8.0.4",
+    "next-offline": "^3.4.0",
     "nprogress": "^0.2.0",
     "react": "^16.8.2",
     "react-apollo": "^2.4.1",
