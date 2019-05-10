@@ -1,0 +1,9 @@
+{
+  "name": "AnimeBeast",
+  "short_name": "AnimeBeast",
+  "background_color": "#FFFFFF",
+  "theme_color": "#673ab7",
+  "description": "view the latest trending anime",
+  "display": "standalone",
+  "start_url": "/"
+}

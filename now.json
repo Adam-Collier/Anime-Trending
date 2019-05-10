@@ -4,20 +4,32 @@
     {
       "src": "next.config.js",
       "use": "@now/next"
+    },
+    {
+      "src": "static/*",
+      "use": "@now/static"
     }
   ],
   "routes": [
     {
       "src": "/index",
       "headers": {
-        "cache-control": "s-maxage=3600, max=0"
+        "cache-control": "public, s-maxage=43200, max-age=43200, immutable"
       }
     },
     {
       "src": "/anime/(?<id>[^/]+)$",
       "dest": "/post?id=$id",
       "headers": {
-        "cache-control": "s-maxage=86400, max=0"
+        "cache-control": "public, s-maxage=43200, max-age=43200, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "headers": {
+        "cache-control": "public, s-maxage=43200, max-age=43200, immutable",
+        "Service-Worker-Allowed": "/"
       }
     }
   ],
