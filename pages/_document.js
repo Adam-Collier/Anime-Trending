@@ -10,6 +10,7 @@ export default class MyDocument extends Document {
     return (
       <html lang="en">
         <Head>
+          <link rel="apple-touch-icon" href="/static/icon-152x152.png" />
           <link rel="manifest" href="/static/manifest.json" />
           <meta name="theme-color" content="#1f202c" />
           <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
@@ -22,4 +23,3 @@ export default class MyDocument extends Document {
     )
   }
 }
-
