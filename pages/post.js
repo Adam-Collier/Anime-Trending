@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import axios from 'axios'
+import { withAmp } from 'next/amp'
 
 import AnimeHeader from '../components/AnimeHeader.js'
 import AnimeContent from '../components/AnimeContent'
@@ -12,53 +13,56 @@ import FeaturedReview from '../components/FeaturedReview'
 import Stats from '../components/Stats'
 import DefaultReviewStat from '../components/DefaultReviewStat'
 
-const Post = ({ header, episodes, characters, reviews, stats }) => {
-  return (
-    <Layout>
-      <AnimeContent>
-        <AnimeHeader data={header} />
-        <div className="utilities">
-          {stats ? (
-            <Stats data={stats} />
-          ) : (
-            <DefaultReviewStat component="stats" />
-          )}
-          {reviews ? (
-            <FeaturedReview data={reviews} />
-          ) : (
-            <DefaultReviewStat component="review" />
-          )}
-        </div>
-        <Tabs>
-          <div label="Episodes">
-            <EpisodeList data={episodes} />
+const Post = withAmp(
+  ({ header, episodes, characters, reviews, stats }) => {
+    return (
+      <Layout>
+        <AnimeContent>
+          <AnimeHeader data={header} />
+          <div className="utilities">
+            {stats ? (
+              <Stats data={stats} />
+            ) : (
+              <DefaultReviewStat component="stats" />
+            )}
+            {reviews ? (
+              <FeaturedReview data={reviews} />
+            ) : (
+              <DefaultReviewStat component="review" />
+            )}
           </div>
-          <div label="Characters">
-            <CharacterList data={characters} />
-          </div>
-          <div label="Reviews">
-            <ReviewList data={reviews} />
-          </div>
-        </Tabs>
-      </AnimeContent>
-      <style jsx>{`
-        .utilities {
-          display: grid;
-          grid-template-columns: 1fr 1.2fr;
-          grid-column: 3/4;
-          grid-row: 4/5;
-          grid-gap: 15px;
-        }
-        @media (max-width: 767px) {
+          <Tabs>
+            <div label="Episodes">
+              <EpisodeList data={episodes} />
+            </div>
+            <div label="Characters">
+              <CharacterList data={characters} />
+            </div>
+            <div label="Reviews">
+              <ReviewList data={reviews} />
+            </div>
+          </Tabs>
+        </AnimeContent>
+        <style jsx>{`
           .utilities {
-            grid-template-rows: auto auto;
-            grid-column: 2/4;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            grid-column: 3/4;
+            grid-row: 4/5;
+            grid-gap: 15px;
           }
-        }
-      `}</style>
-    </Layout>
-  )
-}
+          @media (max-width: 767px) {
+            .utilities {
+              grid-template-rows: auto auto;
+              grid-column: 2/4;
+            }
+          }
+        `}</style>
+      </Layout>
+    )
+  },
+  { hybrid: true }
+)
 
 Post.getInitialProps = async function(context) {
   const { id } = context.query
@@ -130,7 +134,7 @@ Post.getInitialProps = async function(context) {
     getEpisodeList(),
     getCharacterList(),
     getReviews(),
-    getStats(),
+    getStats()
   ]
 
   const results = await Promise.all(promises.map(p => p.catch(e => e)))
@@ -144,7 +148,7 @@ Post.getInitialProps = async function(context) {
     episodeList,
     characterList,
     reviews,
-    stats,
+    stats
   ] = validResults
 
   // const [
@@ -166,8 +170,8 @@ Post.getInitialProps = async function(context) {
     episodes: episodeList,
     characters: characterList,
     reviews: reviews,
-    stats: stats,
+    stats: stats
   }
 }
 
-export default Post
+export default withAmp(Post, { hybrid: true })

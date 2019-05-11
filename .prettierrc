@@ -1,8 +1,21 @@
 {
-  "trailingComma": "es5",
   "encoding": "utf-8",
   "extensions": [".js", ".jsx"],
   "tabWidth": 2,
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": "*.js, */scss",
+      "options": {
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": "*.php",
+      "options": {
+        "trailingComma": "php7.2"
+      }
+    }
+  ]
 }
