@@ -10,6 +10,8 @@ export default class MyDocument extends Document {
     return (
       <html lang="en">
         <Head>
+          <link rel="manifest" href="/static/manifest.json" />
+          <meta name="theme-color" content="#1f202c" />
           <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
         </Head>
         <body>
@@ -20,3 +22,4 @@ export default class MyDocument extends Document {
     )
   }
 }
+
