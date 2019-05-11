@@ -28,6 +28,12 @@ const DefaultReviewStat = ({ component }) => {
           p {
             margin: 0px;
           }
+          @media (max-width: 767px) {
+            .default {
+              grid-column: 1/3;
+              padding: 10px 20px;
+            }
+          }
         `}
       </style>
     </div>
