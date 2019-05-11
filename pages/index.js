@@ -1,3 +1,4 @@
+import { withAmp } from 'next/amp'
 import Layout from '../components/Layout'
 import axios from 'axios'
 
@@ -5,7 +6,7 @@ import AnimeContent from '../components/AnimeContent'
 import AnimeHeader from '../components/AnimeHeader'
 import AnimeCategories from '../components/AnimeCategories.js'
 
-export default function Index({ header, data }) {
+const Index = ({ header, data }) => {
   return (
     <Layout>
       <AnimeContent>
@@ -22,7 +23,7 @@ Index.getInitialProps = async function() {
     action: 150,
     fantasy: 156,
     thriller: 159,
-    adventure: 157,
+    adventure: 157
   }
 
   let categories = Object.keys(obj)
@@ -55,6 +56,8 @@ Index.getInitialProps = async function() {
 
   return {
     data: await categoryLists,
-    header: await getTrendingHeader(),
+    header: await getTrendingHeader()
   }
 }
+
+export default withAmp(Index, { hybrid: true })
