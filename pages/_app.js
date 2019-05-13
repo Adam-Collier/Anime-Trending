@@ -2,7 +2,6 @@ import App, { Container } from 'next/app'
 import React from 'react'
 import Router from 'next/router'
 import NProgress from 'nprogress'
-import withApolloClient from '../lib/with-apollo-client'
 
 NProgress.configure({ showSpinner: false })
 
@@ -14,7 +13,7 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, apolloClient } = this.props
+    const { Component, pageProps } = this.props
     return (
       <Container>
         <Component {...pageProps} />
@@ -67,4 +66,4 @@ class MyApp extends App {
   }
 }
 
-export default withApolloClient(MyApp)
+export default MyApp
