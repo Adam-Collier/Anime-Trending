@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
+import { loadState, saveState } from './localstorage'
+
 const exampleInitialState = {
   apiData: {}
 }
@@ -33,10 +35,20 @@ export const saveData = apiData => {
   return { type: actionTypes.SAVEDATA, apiData }
 }
 
+const persistedState = loadState()
+
 export function initializeStore(initialState = exampleInitialState) {
-  return createStore(
+  const store = createStore(
     reducer,
-    initialState,
+    persistedState,
     composeWithDevTools(applyMiddleware())
   )
+
+  store.subscribe(() => {
+    saveState({
+      apiData: store.getState().apiData
+    })
+  })
+
+  return store
 }
