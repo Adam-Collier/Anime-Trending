@@ -5,8 +5,6 @@ import { withAmp } from 'next/amp'
 import AnimeHeader from '../components/AnimeHeader.js'
 import AnimeContent from '../components/AnimeContent'
 
-import { saveData } from '../store'
-
 import Tabs from '../components/Tabs'
 import EpisodeList from '../components/EpisodeList'
 import CharacterList from '../components/CharacterList'
@@ -66,16 +64,14 @@ const Post = withAmp(
   { hybrid: true }
 )
 
-Post.getInitialProps = async function({ reduxStore, query }) {
-  const { id } = query
+Post.getInitialProps = async function(context) {
+  const { id } = context.query
 
-  async function getMalId() {
-    let data = await axios.get(
-      `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
-    )
-    let { data: mapping } = await data
-    return await mapping.data[0].attributes.externalId
-  }
+  let data = await axios.get(
+    `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
+  )
+  let { data: mapping } = await data
+  let malId = await mapping.data[0].attributes.externalId
 
   async function getTrendingHeader() {
     try {
@@ -111,7 +107,7 @@ Post.getInitialProps = async function({ reduxStore, query }) {
     }
   }
 
-  async function getReviews(malId) {
+  async function getReviews() {
     try {
       let reviewData = axios.get(
         `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
@@ -123,7 +119,7 @@ Post.getInitialProps = async function({ reduxStore, query }) {
     }
   }
 
-  async function getStats(malId) {
+  async function getStats() {
     try {
       let statData = axios.get(`https://api.jikan.moe/v3/anime/${malId}/stats`)
       let stats = await statData
@@ -133,71 +129,34 @@ Post.getInitialProps = async function({ reduxStore, query }) {
     }
   }
 
-  if (reduxStore.getState().apiData[id]) {
-    let store = reduxStore.getState().apiData[id]
-    async function updateData() {
-      if (!store.stats) {
-        let malId = await getMalId()
-        let stats = await getStats(malId)
-        store.stats = stats
-        reduxStore.dispatch(saveData([id, store]))
-      }
-      if (!store.reviews) {
-        let malId = await getMalId()
-        let reviews = await getReviews(malId)
-        store.reviews = reviews
-        reduxStore.dispatch(saveData([id, store]))
-      }
-      return
-    }
-    await updateData()
+  let promises = [
+    getTrendingHeader(),
+    getEpisodeList(),
+    getCharacterList(),
+    getReviews(),
+    getStats()
+  ]
 
-    return store
-  } else {
-    let malId = await getMalId()
+  const results = await Promise.all(promises.map(p => p.catch(e => e)))
 
-    let promises = [
-      getTrendingHeader(),
-      getEpisodeList(),
-      getCharacterList(),
-      getReviews(malId),
-      getStats(malId)
-    ]
+  const validResults = results.map(result =>
+    result instanceof Error ? {} : result
+  )
 
-    const results = await Promise.all(promises.map(p => p.catch(e => e)))
+  let [
+    trendingHeader,
+    episodeList,
+    characterList,
+    reviews,
+    stats
+  ] = validResults
 
-    const validResults = results.map(result =>
-      result instanceof Error ? {} : result
-    )
-
-    let [
-      trendingHeader,
-      episodeList,
-      characterList,
-      reviews,
-      stats
-    ] = validResults
-
-    reduxStore.dispatch(
-      saveData([
-        id,
-        {
-          header: trendingHeader,
-          episodes: episodeList,
-          characters: characterList,
-          reviews: reviews,
-          stats: stats
-        }
-      ])
-    )
-
-    return {
-      header: trendingHeader,
-      episodes: episodeList,
-      characters: characterList,
-      reviews: reviews,
-      stats: stats
-    }
+  return {
+    header: trendingHeader,
+    episodes: episodeList,
+    characters: characterList,
+    reviews: reviews,
+    stats: stats
   }
 }
 
