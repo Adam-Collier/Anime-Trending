@@ -69,79 +69,99 @@ const Post = withAmp(
 Post.getInitialProps = async function({ reduxStore, query }) {
   const { id } = query
 
-  if (reduxStore.getState().apiData[id]) {
-    return reduxStore.getState().apiData[id]
-  } else {
+  async function getMalId() {
     let data = await axios.get(
       `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
     )
     let { data: mapping } = await data
-    let malId = await mapping.data[0].attributes.externalId
+    return await mapping.data[0].attributes.externalId
+  }
 
-    async function getTrendingHeader() {
-      try {
-        let trendingData = axios.get(`https://kitsu.io/api/edge/anime/${id}`)
-        let trendingHeader = await trendingData
-        return trendingHeader.data.data
-      } catch (error) {
-        console.log(error)
-      }
+  async function getTrendingHeader() {
+    try {
+      let trendingData = axios.get(`https://kitsu.io/api/edge/anime/${id}`)
+      let trendingHeader = await trendingData
+      return trendingHeader.data.data
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-    async function getEpisodeList() {
-      try {
-        let data = axios.get(
-          `https://kitsu.io/api/edge/episodes?filter[mediaType]=Anime&filter[media_id]=${id}&sort=number&page[limit]=20`
-        )
-        let episodeList = await data
-        return episodeList.data.data
-      } catch (error) {
-        console.log(error)
-      }
+  async function getEpisodeList() {
+    try {
+      let data = axios.get(
+        `https://kitsu.io/api/edge/episodes?filter[mediaType]=Anime&filter[media_id]=${id}&sort=number&page[limit]=20`
+      )
+      let episodeList = await data
+      return episodeList.data.data
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-    async function getCharacterList() {
-      try {
-        let data = axios.get(
-          `https://kitsu.io/api/edge/castings?filter%5Bmedia_type%5D=Anime&filter%5Bmedia_id%5D=${id}&filter%5Bis_character%5D=true&filter%5Blanguage%5D=Japanese&include=character&sort=-featured`
-        )
-        let episodeList = await data
-        return episodeList.data.included
-      } catch (error) {
-        console.log(error)
-      }
+  async function getCharacterList() {
+    try {
+      let data = axios.get(
+        `https://kitsu.io/api/edge/castings?filter%5Bmedia_type%5D=Anime&filter%5Bmedia_id%5D=${id}&filter%5Bis_character%5D=true&filter%5Blanguage%5D=Japanese&include=character&sort=-featured`
+      )
+      let episodeList = await data
+      return episodeList.data.included
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-    async function getReviews() {
-      try {
-        let reviewData = axios.get(
-          `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
-        )
-        let reviews = await reviewData
-        return reviews.data
-      } catch (error) {
-        console.log(error)
-      }
+  async function getReviews(malId) {
+    try {
+      let reviewData = axios.get(
+        `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
+      )
+      let reviews = await reviewData
+      return reviews.data
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-    async function getStats() {
-      try {
-        let statData = axios.get(
-          `https://api.jikan.moe/v3/anime/${malId}/stats`
-        )
-        let stats = await statData
-        return stats.data
-      } catch (error) {
-        console.log(error)
-      }
+  async function getStats(malId) {
+    try {
+      let statData = axios.get(`https://api.jikan.moe/v3/anime/${malId}/stats`)
+      let stats = await statData
+      return stats.data
+    } catch (error) {
+      console.log(error)
     }
+  }
+
+  if (reduxStore.getState().apiData[id]) {
+    let store = reduxStore.getState().apiData[id]
+    async function updateData() {
+      if (!store.stats) {
+        let malId = await getMalId()
+        let stats = await getStats(malId)
+        store.stats = stats
+        reduxStore.dispatch(saveData([id, store]))
+      }
+      if (!store.reviews) {
+        let malId = await getMalId()
+        let reviews = await getReviews(malId)
+        store.reviews = reviews
+        reduxStore.dispatch(saveData([id, store]))
+      }
+      return
+    }
+    await updateData()
+
+    return store
+  } else {
+    let malId = await getMalId()
 
     let promises = [
       getTrendingHeader(),
       getEpisodeList(),
       getCharacterList(),
-      getReviews(),
-      getStats()
+      getReviews(malId),
+      getStats(malId)
     ]
 
     const results = await Promise.all(promises.map(p => p.catch(e => e)))
