@@ -5,6 +5,8 @@ import { withAmp } from 'next/amp'
 import AnimeHeader from '../components/AnimeHeader.js'
 import AnimeContent from '../components/AnimeContent'
 
+import { saveData } from '../store'
+
 import Tabs from '../components/Tabs'
 import EpisodeList from '../components/EpisodeList'
 import CharacterList from '../components/CharacterList'
@@ -64,14 +66,16 @@ const Post = withAmp(
   { hybrid: true }
 )
 
-Post.getInitialProps = async function(context) {
-  const { id } = context.query
+Post.getInitialProps = async function({ reduxStore, query }) {
+  const { id } = query
 
-  let data = await axios.get(
-    `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
-  )
-  let { data: mapping } = await data
-  let malId = await mapping.data[0].attributes.externalId
+  async function getMalId() {
+    let data = await axios.get(
+      `https://kitsu.io/api/edge/anime/${id}/mappings?filter[externalSite]=myanimelist/anime`
+    )
+    let { data: mapping } = await data
+    return await mapping.data[0].attributes.externalId
+  }
 
   async function getTrendingHeader() {
     try {
@@ -107,7 +111,7 @@ Post.getInitialProps = async function(context) {
     }
   }
 
-  async function getReviews() {
+  async function getReviews(malId) {
     try {
       let reviewData = axios.get(
         `https://api.jikan.moe/v3/anime/${malId}/reviews/1`
@@ -119,7 +123,7 @@ Post.getInitialProps = async function(context) {
     }
   }
 
-  async function getStats() {
+  async function getStats(malId) {
     try {
       let statData = axios.get(`https://api.jikan.moe/v3/anime/${malId}/stats`)
       let stats = await statData
@@ -129,48 +133,71 @@ Post.getInitialProps = async function(context) {
     }
   }
 
-  let promises = [
-    getTrendingHeader(),
-    getEpisodeList(),
-    getCharacterList(),
-    getReviews(),
-    getStats()
-  ]
+  if (reduxStore.getState().apiData[id]) {
+    let store = reduxStore.getState().apiData[id]
+    async function updateData() {
+      if (!store.stats) {
+        let malId = await getMalId()
+        let stats = await getStats(malId)
+        store.stats = stats
+        reduxStore.dispatch(saveData([id, store]))
+      }
+      if (!store.reviews) {
+        let malId = await getMalId()
+        let reviews = await getReviews(malId)
+        store.reviews = reviews
+        reduxStore.dispatch(saveData([id, store]))
+      }
+      return
+    }
+    await updateData()
 
-  const results = await Promise.all(promises.map(p => p.catch(e => e)))
+    return store
+  } else {
+    let malId = await getMalId()
 
-  const validResults = results.map(result =>
-    result instanceof Error ? {} : result
-  )
+    let promises = [
+      getTrendingHeader(),
+      getEpisodeList(),
+      getCharacterList(),
+      getReviews(malId),
+      getStats(malId)
+    ]
 
-  let [
-    trendingHeader,
-    episodeList,
-    characterList,
-    reviews,
-    stats
-  ] = validResults
+    const results = await Promise.all(promises.map(p => p.catch(e => e)))
 
-  // const [
-  //   trendingHeader,
-  //   episodeList,
-  //   characterList,
-  //   reviews,
-  //   stats,
-  // ] = await Promise.all([
-  //   getTrendingHeader().catch(e => e),
-  //   getEpisodeList().catch(e => e),
-  //   getCharacterList().catch(e => e),
-  //   getReviews().catch(e => e),
-  //   getStats().catch(e => e),
-  // ])
+    const validResults = results.map(result =>
+      result instanceof Error ? {} : result
+    )
 
-  return {
-    header: trendingHeader,
-    episodes: episodeList,
-    characters: characterList,
-    reviews: reviews,
-    stats: stats
+    let [
+      trendingHeader,
+      episodeList,
+      characterList,
+      reviews,
+      stats
+    ] = validResults
+
+    reduxStore.dispatch(
+      saveData([
+        id,
+        {
+          header: trendingHeader,
+          episodes: episodeList,
+          characters: characterList,
+          reviews: reviews,
+          stats: stats
+        }
+      ])
+    )
+
+    return {
+      header: trendingHeader,
+      episodes: episodeList,
+      characters: characterList,
+      reviews: reviews,
+      stats: stats
+    }
   }
 }
 
